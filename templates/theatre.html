@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+Veterinary Calculations Theatre
+{% endblock %}
+
+{% block main %}
+<div class="flexcontainer">
+<div class="flexbox2">
+    <img src="/static/Injectable.jpg" class="testimage">
+    <h3 class="centered">Injectable Medicine Calculations</h3>
+    <a class="teachme" href="/injectioncalc?q=teach">Teach Me</a>
+    <a class="quizme" href="/injectioncalc?q=quiz">Quiz Me</a>
+    <a class="testme" href="/test">Test Me</a>
+    </div>
+<div class="flexbox2">
+    <img src="/static/Anaesthetic.jpg" class="testimage">
+    <h3 class="centered">Anaesthetic Gas Flow Calculations</h3>
+    <a class="teachme" href="/gascalc?q=teach">Teach Me</a>
+    <a class="quizme" href="/gascalc?q=quiz">Quiz Me</a>
+    <a class="testme" href="/test">Test Me</a>
+    </div>
+</div>
+{% endblock %}

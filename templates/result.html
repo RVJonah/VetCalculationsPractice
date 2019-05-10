@@ -1,0 +1,27 @@
+<div id="resultdiv" class="centered mtitle">
+    {% if counter < 10 %} You left {{unanswered}} questions unanswered.{% endif %}
+    {% if counter < 5 %}
+    It seems more practice is needed with {{percentage}}% correct answers
+    {% endif %}
+
+    {% if counter > 4 and counter < 8 %}
+    Ok you got some right but with a result of {{percentage}}% correct answers there is room for improvement
+    {% endif %}
+
+    {% if counter > 7 and counter < 10 %}
+    Not a bad result with {{percentage}}% correct answers but you can do better
+    {% endif %}
+
+    {% if counter > 9 %}
+    Congratulations! You got 100% of the answers correct
+    {% endif %}
+
+</div>
+<div class="mtitle" id="tester">Would you like to try this test again or try another test?</div>
+<div id="startbtn">
+    <input type="button" class="centered" id="repeatbtn" value="Retry Test" onclick="requesttest('{{TType}}',2)">
+    <input type="button" class="centered" id="returnbtn" value="Try Another" onclick="returner()">
+</div>
+<div id="questionNum"></div>
+<div id="testdiv1" class="flexcontainertest"></div>
+<div id="testdiv2"></div>

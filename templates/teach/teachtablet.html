@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tablet Calcuations
+{% endblock %}
+
+{% block main %}
+<div class="flexcontainer">
+<div class="flexbox2 infodiv">
+    Ensuring a patient is sent home with the right amount of medication is crucial in ensuring treatment success.<br>
+     <br>
+     The patient's details alongside the requirements of the medication can be found in the box on the right.
+     Note that drug doses are based on the animal's bodyweight. Take note of the number of doses required to be given daily
+     and also the number of days for which the course is to continue.<br>
+      <br>
+     A sample question can be found in the box below and a detailed explanation of the calculation based on the details on the right
+     can be found underneath.
+</div>
+<div class="flexbox2">
+    <h3>Patient Details</h3>
+    <ul class="pDetails">
+    <li>Species: {{data.species}}</li>
+    <li>Weight: {{data.bodyweight}}kg</li>
+    <li>Presenting Complaint: {{data.symptom}}</li>
+    <li>Max Dose Rate: {{data.dose}}mg/kg</li>
+    <li>Tablet Strength Available: {{data.medStrength}}mg Tablets</li>
+    <li>Daily Doses: {% if data.interval == 1 %}Once{% else %}Twice{% endif %} Daily</li>
+    <li>Length Of Treatment: {{data.courseLength}} Days</li>
+    </ul>
+</div>
+</div>
+<div class="question">
+    {{data.question.part1}}<br>
+    {{data.question.part2}}<br>
+    {{data.question.part3}}
+</div>
+<div style="margin-bottom: 20px;">
+    <input type="button" class="smallbtn" onclick="window.location.href='/tabletcalc?q=teach'" style="float:right;" value="Next Example"><br>
+     <br>
+</div>
+<div class="teachpharma">
+    Below is a step by step guide to solving this type of calculation:
+    <div class="centered">
+    First we calculate the number of milligrams required by the patient for each individual dose:
+    </div>
+    <div class="centered formula">
+        Mg per Dose = Bodyweight X Minimum Dose Rate <br>
+        Mg per Dose = {{data.bodyweight}}kg X {{data.dose}}mg/kg = {{data.mgPerDose}}mg<br>
+    </div>
+    <div class="centered">
+        Then we can work out how many tablets are required for each dose:
+        </div>
+    <div class="centered formula">
+        Tablets per Dose = Mg per Dose / Strength of Tablet<br>
+        Tablets per Dose = {{data.mgPerDose}}mg / {{data.medStrength}}mg/Tablet = {{data.unroundedTabsPer}} Tablets
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest quarter of a tablet to prevent us from overdosing the patient
+    </div>
+    <div class="centered formula">
+        So {{data.unroundedTabsPer}} Tablets is rounded to {{data.tabPer}} Tablets
+    </div>
+    <div class="centered">
+    The total number of tablets is then found by multiplying this number of tablets by the number of times the dose is required per day and the
+    number of days in the course
+    </div>
+    <div class="centered formula">
+        Total Number of Tablets = Tablets per Dose X Number of Daily Doses X Length of Treatment<br>
+        So the Total Number of Tablets = {{data.tabPer}} Tablets X {{data.interval}} Dose{% if data.interval == 2 %}s{% endif %}
+        / per Day X {{data.courseLength}} Days = {{data.unroundedANS}} Tablets
+    </div>
+    <div class="centered">
+        This must then be rounded up to a whole number of tablets to give use the answer
+    </div>
+    <div class="centered answerText">
+        Answer = {{data.ANS}} Tablets
+    </div>
+</div>
+
+{% endblock %}

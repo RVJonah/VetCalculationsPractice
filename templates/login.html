@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Veterinary Calculations Login
+{% endblock %}
+
+{% block main %}
+<div class="centered">
+<p class="mtitle">Log in to take a test</p>
+<form id="loginform" action="/login" method="post">
+    <div class="formdiv centered">
+    <div class="formitem">Username <br><input type="text" class="answerboxlong" autofocus autocomplete="off" name="username" title="Username"></div>
+    <div class="formitem">Password <br><input type="password" class="answerboxlong" name="password" title="Password"></div>
+    <div class="formitem"><input type="submit" style="font-size: 1vw" class="subbtn " id="logbtn" value="Log In"></div>
+    <div style="font-size: 1vw" class="formitem"><a href="/register">Not Registered?</a></div>
+    </div>
+</form>
+
+</div>
+{% endblock %}

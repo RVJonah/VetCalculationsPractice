@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+Oral Liquid Calculations
+{% endblock %}
+
+{% block main %}
+
+<div id="answer" style="display:none;">{{data.ANS}}</div>
+<div class="flexcontainer">
+<div class="flexbox2 infodiv">
+    Ensuring a patient is sent home with the right amount of medication is crucial in ensuring treatment success.<br>
+     <br>
+    The patient's details alongside the requirements of the medication can be found in the box on the right.
+    Note that drug doses are based on the animal's bodyweight. Take note of the number of doses required to be given daily
+    and also the number of days for which the course is to continue. Also note whether the concentration of the medication is given
+    as a percentage(%) or in milligrams per mlllilitre(mg/ml).<br>
+      <br>
+    A sample question can be found in the box below and a detailed explanation of the calculation based on the details on the right
+     can be found underneath.
+</div>
+<div class="flexbox2">
+    <h3>Patient Details</h3>
+    <ul class="pDetails">
+    <li>Species: {{data.species}}</li>
+    <li>Weight: {{data.bodyweight}}kg</li>
+    <li>Presenting Complaint: {{data.symptom}}</li>
+    <li>Max Dose Rate: {{data.dose}}mg/kg</li>
+    <li>Liquid Strength Available: {{data.medStrength}}{% if data.lType == 1 %}mg/ml {% else %}% Solution{%endif%}</li>
+    <li>Daily Doses: {% if data.interval == 1 %}Once{% else %}Twice{% endif %} Daily</li>
+    <li>Length Of Treatment: {{data.courseLength}} Days</li>
+    </ul>
+</div>
+</div>
+<div class="question">
+        {{data.question.part1}}<br>
+        {{data.question.part2}}<br>
+        {{data.question.part3}}<br>
+
+</div>
+<div class="comment"></div>
+<div style="margin-bottom: 10px;">
+    <input type="button" class="smallbtn " onclick="window.location.href='/liquidcalc?q=teach'" style="float:right;" value="Next Example"><br>
+     <br>
+</div>
+<div class="teachpharma">
+    Below is a step by step guide to solving this type of calculation:
+    <div class="centered">
+        First we calculate the number of milligrams required by the patient for each individual dose:
+    </div>
+    <div class="centered formula">
+        Mg per Dose = Bodyweight X Minimum Dose Rate
+        Mg per Dose = {{data.bodyweight}}kg X {{data.dose}}mg/kg = {{data.mgPerDose}}mg<br>
+    </div>
+    <div class="centered">
+        If the solution is given as a percentage it can be changed into a mg/ml concentration by multiplying by 10
+    </div>
+    {% if data.lType == 2 %}
+    <div class="centered formula">
+        Concentration = {{data.medStrength}} X 10 = {{data.percMedStrength}}mg/ml <br>
+    </div>{%endif%}
+     <div class="centered">
+        Then we can work out the volume of liquid required for each dose:
+    </div>
+    <div class="centered formula">
+        Volume per Dose = Mg per Dose / Concentration of Liquid<br>
+        Volume per Dose = {{data.mgPerDose}}mg /{{data.medStrength}}mg/ml ={{data.unroundedVolPer}}ml
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest 0.1ml
+    </div>
+    <div class="centered formula">This is then rounded to {{data.liquidPer}}ml</div>
+    <div class="centered">
+        The total volume of liquid required is then found by this volume multiplying by the number of times the dose is required
+        per day and the number of days in the course
+    </div>
+    <div class="centered formula">
+        Total Volume of Liquid = Volume per Dose X Number of Daily Doses X Length of Treatment<br>
+        Total Volume of Liquid = {{data.liquidPer}} ml X {{data.interval}} Dose{% if data.interval == 2 %}s{% endif %}/Day
+        X {{data.courseLength}} Days = {{data.unroundANS}}ml
+    </div>
+    <div class="centered">
+        If necessary this must then be rounded up to the nearest millilitre
+    </div>
+    <div class="centered answerText">
+        Total Volume = {{data.ANS}}ml
+    </div>
+</div>
+
+{% endblock %}

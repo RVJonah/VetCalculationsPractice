@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fluid Therapy Calculations
+{% endblock %}
+
+{% block main %}
+
+<script>
+document.getElementsByTagName("Main")[0].style.backgroundColor = "#cce5ff";
+document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
+</script>
+<div class="flexcontainer">
+<div class="flexbox2 infodiv">
+    Understanding fluid therapy calculations is very important due to the severe effects of over hydrating or under hydrating our patients.<br>
+    To the right you will see patient details that will be provided by the question or found on the patients notes if you are in practice.<br>
+     <br>
+    The question information will be provided in the box below.
+    It is important to note whether you are expected to give your answer in millitres per hour(ml/hr) or seconds per drop (s/drop).
+    The ml/hr calculations are using used when calculating fluid given via an automated fluid pump.
+    It is also important to note whether patient is dehydrated, has on-going losses requiring replacement or more simply requires daily maintenance fluids.<br>
+     <br>
+     A sample question can be found in the box below and a detailed explanation of the calculations based on the details on the right
+     can be found underneath.
+
+</div>
+<div class="flexbox2">
+    <h3>Patient Details</h3>
+    <ul class="pDetails">
+    <li>Species: {{data.species}}</li>
+    <li>Weight: {{data.bodyweight}}kg</li>
+    <li>Percentage Dehydration: {{data.dehydration}}%</li>
+    <li>Ongoing Fluid Loss per Day: {{data.onGoingLoss}}ml/day </li>
+    <li>Giving Set Drops per ml: {{data.dropsPerMl}}</li>
+    <li>Maintenance Fluid Rate: {{data.dailyFluids}}ml/kg</li>
+    </ul>
+</div>
+</div>
+<div class="question"> {{ data.question.part1}}<br>
+{{data.question.part2}}<br>
+    {{data.question.part3}}{{data.question.part5}}
+</div>
+<div>
+    <input type="button" class="smallbtn" onclick="window.location.href='/tabletcalc?q=teach'" style="float:right;" value="Next Example"><br>
+     <br>
+</div>
+<div class="teachkennel">
+    Below is a step by step guide to solving these types of calculation:<br>
+    This half covers calculations in millilires per hour
+    <div class="centered">
+        First we must calculate the maintenance fluid required by the patient
+    </div>
+
+    <div class="centered formula">
+        Maintenance Fluid = Bodyweight X Daily Maintenance Fluid Rate<br>
+        Maintenance Fluid = {{data.bodyweight}} X {{data.dailyFluids}} = {{data.dailyMaintenanceMl}}ml
+    </div>
+    <div class="centered">
+        If the patient is dehydrated and/or has ongoing losses we must then calculate the fluid required to return
+        their hydration status to normal<br>
+        1kg of bodyweight is approximately equivalent is 1000ml of water
+    </div>
+    <div class="centered formula">
+        Fluid to Rehydrate = Bodyweight(kg) X 1000 X (Percentage Dehydated / 100) <br>
+        Fluid to Rehydrate = {{data.bodyweight}} X 1000 X ({{data.dehydration}} / 100) = {{data.replace}}ml
+    </div>
+    <div class="centered">
+        We then add to this value any ongoing fluid losses
+    </div>
+    <div class="centered formula">
+        Total Fluid Replacement Requirement = Fluid to Rehydrate + Ongoing Daily Losses <br>
+        Total Fluid Replacement Requirement = {{data.replace}}ml + {{data.onGoingLoss}}ml = {{data.replaceLoss}}ml
+    </div>
+    <div class="centered">
+        The volume of fluid for the day must then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Fluid = Maintenance Fluid + Fluid Replacement Requirement<br>
+        Total Daily Fluid = {{data.dailyMaintenanceMl}}ml + {{data.replaceLoss}}ml = {{data.requiredFluid}}ml
+    </div>
+    <div class="centered">
+        The hourly fluid rate can then be found
+    </div>
+    <div class="centered formula">
+        Hourly Fluid Rate = Total Daily Fluid / 24hrs<br>
+        Hourly Fluid Rate = {{data.requiredFluid}}ml / 24hrs = {{data.unroundedMlPerHour}}ml/hr
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest ml
+    </div>
+    <div class="centered answerText">
+         Answer = {{data.ANSml}}ml/hr
+    </div>
+</div>
+<div class="teachkennel">
+     <br>
+    This half covers calculations in seconds per drop
+    <div class="centered">
+        First we must calculate the maintenance fluid required by the patient
+    </div>
+    <div class="centered formula">
+        Maintenance Fluid = Bodyweight X Daily Maintenance Fluid Rate<br>
+        Maintenance Fluid = {{data.bodyweight}} X {{data.dailyFluids}} = {{data.dailyMaintenanceMl}}ml
+    </div>
+    <div class="centered">
+        If the patient is dehydrated and/or has ongoing losses we must then calculate the fluid required to return
+        their hydration status to normal<br>
+        1kg of bodyweight is approximately equivalent is 1000ml of water
+    </div>
+    <div class="centered formula">
+        Fluid to Rehydrate = Bodyweight(kg) X 1000 X (Percentage Dehydated / 100) <br>
+        Fluid to Rehydrate = {{data.bodyweight}} X 1000 X ({{data.dehydration}} / 100) = {{data.replace}}ml
+    </div>
+    <div class="centered">
+        We then add to this value any ongoing fluid losses
+    </div>
+    <div class="centered formula">
+        Total Fluid Replacement Requirement = Fluid to Rehydrate + Ongoing Daily Losses <br>
+        Total Fluid Replacement Requirement = {{data.replace}}ml + {{data.onGoingLoss}}ml = {{data.replaceLoss}}ml
+    </div>
+    <div class="centered">
+        The volume of fluid for the day must then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Fluid = Maintenance Fluid + Fluid Replacement Requirement<br>
+        Total Daily Fluid = {{data.dailyMaintenanceMl}}ml + {{data.replaceLoss}}ml = {{data.requiredFluid}}ml
+    </div>
+    <div class="centered">
+        The number of drops required per day can then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Drops = Total Daily Fluid X Giving Set Drops per ml<br>
+        Total Daily Drops = {{data.requiredFluid}}ml X {{data.dropsPerMl}} drops/ml = {{data.dailyDrops}} drops/day
+    </div>
+    <div class="centered">
+        The number of seconds in a day is 86400 (24 hours X 60 minutes X 60 seconds)
+    </div>
+    <div class="centered formula">
+        Drops per Second = Total Daily Drops / Seconds in a Day<br>
+        Drops per Second = {{data.dailyDrops}}drops/day / 86400 = {{data.dropsPerSec}} drops/second<br>
+    </div>
+    <div class="centered">
+        The number of seconds per drop is 1 divided bt the number of drops per second
+    </div>
+    <div class="centered formula">
+    Seconds per Drop = 1 / Seconds per Drop<br>
+    Seconds per Drop = 1 / {{data.dropsPerSec}} drops/second = {{data.unroundedSecPerDrop}} seconds/drop
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest second
+    </div>
+    <div class="centered answerText">
+         Answer = {{data.ANSdrop}} seconds/drop
+    </div>
+</div>
+
+{% endblock %}

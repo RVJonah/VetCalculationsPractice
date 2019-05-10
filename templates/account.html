@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+My account
+{% endblock %}
+
+{% block main %}
+<div class="mtitle">Current results for: {{ student[0]['Username']}}</div>
+
+<div><table class="resultTable">
+    <tr>
+    <th>Test Type</th>
+    <th>Best Score</th>
+    <th>Number of Tests Taken</th>
+    </tr>
+    <tr>
+        <td class="pharmacy">Tablet Calculations</td>
+        <td class="pharmacy">{{ bestResult['Tablet'] }}</td>
+        <td class="pharmacy">{{ attempts['Tablet'] }} {% if attempts['Tablet'] == 1 %}test{% else %}tests{% endif %}</td>
+    </tr>
+    <tr>
+        <td class="pharmacy">Liquid Calculations</td>
+        <td class="pharmacy">{{ bestResult['Liquid'] }}</td>
+        <td class="pharmacy">{{ attempts['Liquid'] }} {% if attempts['Liquid'] == 1 %}test{% else %}tests{% endif %}</td>
+    </tr>
+    <tr>
+        <td class="kennels">Fluid Therapy Calculations</td>
+        <td class="kennels">{{ bestResult['Fluids'] }}</td>
+        <td class="kennels">{{ attempts['Fluids'] }} {% if attempts['Fluids'] == 1 %}test{% else %}tests{% endif %}</td>
+    </tr>
+    <tr>
+        <td class="theatre">Gas Flow Calculations</td>
+        <td class="theatre">{{ bestResult['gasFlow'] }}</td>
+        <td class="theatre">{{ attempts['gasFlow'] }} {% if attempts['gasFlow'] == 1 %}test{% else %}tests{% endif %}</td>
+    </tr>
+    <tr>
+        <td class="theatre">Injectable Calculations</td>
+        <td class="theatre">{{ bestResult['Injectable'] }}</td>
+        <td class="theatre">{{ attempts['Injectable'] }} {% if attempts['Injectable'] == 1%}test{% else %}tests{% endif %}</td>
+    </tr>
+    <tr>
+        <td class="hazard">Random Calculations</td>
+        <td class="hazard">{{ bestResult['Hazard'] }}</td>
+        <td class="hazard">{{ attempts['Hazard'] }} {% if attempts['Hazard'] == 1%}test{% else %}tests{% endif %}</td>
+    </tr>
+</table></div>
+<div class="centered mtitle" style="margin-top: 2%;">
+    Please use the form below to update your details
+<form class="sDetails" id="updateform">
+    <div id="storedEmail">Current Email Address: {{student[0]['Email']}}</div>
+    New Email Address: <input type="email" class="answerboxlong" name="updemail" autocomplete="off"><br>
+
+    New Password: <input type="password" class="answerbox" name="updpass" autocomplete="off"><br>
+    Confirm New Password: <input type="password" class="answerbox" name="updconpass" autocomplete="off">
+</form>
+<div class="sDetails"><div style="padding-left:5%;"><input type="button" class="updatebtn centered" value="Submit Changes" onclick="update()"></div></div>
+<div id="comment" class="sDetails"></div></div>
+{% endblock %}

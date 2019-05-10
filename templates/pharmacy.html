@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+Vet Calculation Pharmacy
+{% endblock %}
+
+{% block main %}
+<div class="flexcontainer">
+<div class="flexbox2">
+    <img src="/static/Pills.jpg" class="testimage">
+    <h3 class="centered">Tablet Medicine Calculations</h3>
+    <a class="teachme" href="/tabletcalc?q=teach">Teach Me</a>
+    <a class="quizme" href="/tabletcalc?q=quiz">Quiz Me</a>
+    <a class="testme" href="/test">Test Me</a>
+    </div>
+<div class="flexbox2">
+    <img src="/static/Liquid.jpg" class="testimage">
+    <h3 class="centered">Oral Liquid Medicine Calculations</h3>
+    <a class="teachme" href="/liquidcalc?q=teach">Teach Me</a>
+    <a class="quizme" href="/liquidcalc?q=quiz">Quiz Me</a>
+    <a class="testme" href="/test">Test Me</a>
+    </div>
+</div>
+{% endblock %}

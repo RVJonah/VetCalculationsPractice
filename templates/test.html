@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Veterinary Calculations Testing Area
+{% endblock %}
+
+{% block main %}
+<div id="testpage">
+<div id="resultdiv"></div>
+<div class="mtitle" id="tester">
+    Please select a test below
+    <div style="font-size: 1.5vw;">Random is comprised of 10 randomly generated questions from all topics</div>
+    <div class="flexcontainer">
+        <div class="flexbox3"><input type="image" src="/static/Pills.jpg" class="testimage" onclick="requesttest('Tablet',1)">Tablets</div>
+        <div class="flexbox3"><input type="image" src="/static/Liquid.jpg" class="testimage" onclick="requesttest('Liquid',1)">Oral Liquids</div>
+        <div class="flexbox3"><input type="image" src="/static/Fluids.jpg" class="testimage" onclick="requesttest('Fluids',1)">Fluids</div>
+    </div>
+    <div class="flexcontainer">
+        <div class="flexbox3"><input type="image" src="/static/Anaesthetic.jpg" class="testimage" onclick="requesttest('gasFlow',1)">Gas Flow</div>
+        <div class="flexbox3"><input type="image" src="/static/Injectable.jpg" class="testimage" onclick="requesttest('Injectable',1)">Injectables</div>
+        <div class="flexbox3"><input type="image" src="/static/Hazard.jpg" class="testimage" onclick="requesttest('Hazard',1)">Random</div>
+    </div>
+</div>
+<div id="questionNum"></div>
+<div id="testdiv1" class="flexcontainertest"></div>
+<div id="testdiv2"></div>
+</div>
+
+{% endblock %}
+{% block footer %}
+<script src="/static/Test.js"></script>
+{% endblock %}

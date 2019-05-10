@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+Anaesthetic Gas Flow Calculations
+{% endblock %}
+
+{% block main %}
+<script>
+document.getElementsByTagName("Main")[0].style.backgroundColor = "#e0e0eb";
+document.getElementsByTagName("Main")[0].style.border = "3px solid #5c8a8a";
+</script>
+<div class="flexcontainer">
+<div class="flexbox2 infodiv">
+    Correct fresh oxygen flow rate is vital to ensure good oxygen supply to the tissues of an anaesthetised patient.<br>
+    Patient weight is important in determining tidal volume (the volume of each breath of a patient). Other important details to note
+    are the circuit factors for the circuit given and the respiration rate of the patient. The patient details can be found on the right.<br>
+     <br>
+    A sample question can be found in the box below and a detailed explanation of the calculation based on the details on the right
+     can be found underneath.
+</div>
+<div class="flexbox2">
+    <h3>Patient Details</h3>
+    <ul class="pDetails">
+    <li>Species: {{data.species}}</li>
+    <li>Weight: {{data.bodyweight}}kg</li>
+    <li>Respiration Rate: {{data.respirationRate}} breaths/minute</li>
+    <li>Tidal Volume: {{data.tidalVolume}} ml/kg</li>
+    <li>Circuit Type: {{data.circuit}}</li>
+    <li>Circuit Factor: {{data.minFactor}}-{{data.maxFactor}}</li>
+    </ul>
+</div>
+</div>
+<div class="question"> {{ data.question.part1}}<br>
+{{data.question.part5}}
+</div>
+<div class="comment"></div>
+<div style="margin-bottom: 10px;">
+    <input type="button" class="smallbtn floatbtn" onclick="window.location.href='/gascalc?q=teach'" value="Next Question"><br>
+     <br>
+</div>
+<div class="teachtheatre">
+    Below is a step by step guide to solving this type of calculation:
+    <div class="centered">
+        First we find the volume per breath of the patient using the patients weight and the tidal volume in ml/kg
+    </div>
+    <div class="centered formula">
+         Breath Volume = Bodyweight X Tidal Volume<br>
+         Breath Volume = {{data.bodyweight}}kg X {{data.tidalVolume}}ml/kg = {{data.breathVolume}}ml
+    </div>
+    <div class="centered">
+        Then we find the volume of air required per minute
+    </div>
+    <div class="centered formula">
+        Airflow per Minute = Breath Volume X Respiration Rate<br>
+        Airflow per Minute = {{data.breathVolume}}ml X {{data.respirationRate}} breaths/minute = {{data.minuteVolume}}ml/minute
+    </div>
+    <div class="centered">
+        Then we multiply this by the maximum and minimum circuit factors
+    </div>
+    <div class="centered formula">
+        Maximum Gasflow per Minute = Airflow per Minute X Maximum Circuit Factor <br>
+        Maximum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.maxFactor}} <br>
+        Minimum Gasflow per Minute = Airflow per Minute X Minimum Circuit Factor<br>
+        Minimum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.minFactor}}
+    </div>
+    <div class="centered">
+        For the sake of calcuation we will round these to the nearest ml but if is often not possible to be this accurate
+    </div>
+    <div class="centered formula">
+        Maximum Gas Flow Rate = {{data.maxGasFlow}}ml/minute<br>
+        Minimum Gas Flow Rate = {{data.minGasFlow}}ml/minute
+    </div>
+</div>
+{% endblock %}

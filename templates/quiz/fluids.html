@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fluid Therapy Calculations
+{% endblock %}
+
+{% block main %}
+
+<script>
+document.getElementsByTagName("Main")[0].style.backgroundColor = "#cce5ff";
+document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
+</script>
+<div id="answer" style="display:none;">{{data.ANS}}</div>
+<div class="flexcontainer">
+<div class="flexbox2"><img class="pPic" src{% if data.species == "Cat"%}="/static/Cat.jpg"{% elif data.species == "Dog" %}="/static/Dog.jpg"{% else %}="/static/Rabbit.jpg"{% endif %}></div>
+<div class="flexbox2">
+    <h3>Patient Details</h3>
+    <ul class="pDetails">
+    <li>Species: {{data.species}}</li>
+    <li>Weight: {{data.bodyweight}}kg</li>
+    {% if data.dehydration > 0 %}<li>Percentage Dehydration: {{data.dehydration}}%</li>
+    {% if data.onGoingLoss > 0 %}<li>Ongoing Fluid Loss per Day: {{data.onGoingLoss}}ml/day </li>{% endif %}
+    <li>Giving Set Drops per ml: {{data.dropsPerMl}}</li>{% endif %}
+    <li>Maintenance Fluid Rate: {{data.dailyFluids}}ml/kg</li>
+    </ul>
+</div>
+</div>
+<div class="question"> {{ data.question.part1}}<br>
+{{data.question.part2}}<input type="number" class="answerbox">{{data.question.part4}} <br>
+    {{data.question.part3}}{{data.question.part5}}
+</div>
+<div class="comment"></div>
+<div style="margin-bottom: 10px;">
+    <input type="button" class="smallbtn hintbtn" onclick="hintreveal()" value="Help Me!">
+    <input type="button" class="smallbtn answerbtn" onclick="answerreveal()" value="Show Answer">
+    <input type="button" class="smallbtn submitbtn" onclick="answercheck(1)" value="Submit Answer">
+    <input type="button" class="smallbtn newbtn" onclick="window.location.href='/fluidcalc?q=quiz'" value="Next Question">
+</div>
+<div class="hint">
+    The calculation can be performed using the following formulae:
+    <div class="centered formula">
+        Maintenance Fluid = Bodyweight X Daily Maintenance Fluid Rate
+    </div>
+    {% if data.dehydration > 0 %}
+    <div class="centered formula">
+        Fluid to Rehydrate = Bodyweight X 1000 X (Percentage Dehydated / 100) <br>
+        Total Fluid Replacement Requirement = Fluid to Rehydrate + Ongoing Daily Losses
+    </div>
+    {% endif %}
+    <div class="centered">
+        The volume of fluid for the day must then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Fluid = Maintenance Fluid{% if data.dehydration > 0 %} + Fluid Replacement Requirement{% endif %}
+    </div>
+    {% if data.mlVsSec == 0 %}
+    <div class="centered formula">
+        Hourly Fluid Rate = Total Daily Fluid / 24hrs
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest ml
+    </div>
+    {% endif %}
+    {% if data.mlVsSec == 1 %}
+    <div class="centered">
+        The number of drops required per day can then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Drops = Total Daily Fluid X Giving Set Drops per ml
+    </div>
+    <div class="centered">
+        The number of seconds in a day is 86400 (24 hours X 60 minutes X 60 seconds)
+    </div>
+    <div class="centered formula">
+        Drops per Second = Total Daily Drops / Seconds in a Day<br>
+        Seconds per Drop = 1 / Seconds per Drop
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest second
+    </div>
+    {% endif %}
+</div>
+<div class="answer">
+    The calculation for the answer is as follows:
+    <div class="centered formula">
+        Maintenance Fluid = {{data.bodyweight}} X {{data.dailyFluids}} = {{data.dailyMaintenanceMl}}ml
+    </div>
+    {% if data.dehydration > 0 %}
+    <div class="centered formula">
+        Fluid to Rehydrate = {{data.bodyweight}} X 1000 X ({{data.dehydration}} / 100) <br>
+        Total Fluid Replacement Requirement = {{data.replace}}ml + {{data.onGoingLoss}}ml = {{data.replaceLoss}}ml
+    </div>
+    <div class="centered">
+        The volume of fluid for the day must then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Fluid = {{data.dailyMaintenanceMl}}ml + {{data.replaceLoss}}ml = {{data.requiredFluid}}ml
+    </div>
+    {% endif %}
+    {% if data.mlVsSec == 0 %}
+    <div class="centered formula">
+        Hourly Fluid Rate = {{data.requiredFluid}}ml / 24hrs = {{data.unroundedMlPerHour}}ml/hr
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest ml
+    </div>
+    <div class="centered answerText">
+         Answer = {{data.ANS}} ml/hr
+    </div>
+    {% endif %}
+    {% if data.mlVsSec == 1 %}
+    <div class="centered">
+        The number of drops required per day can then be found
+    </div>
+    <div class="centered formula">
+        Total Daily Drops = {{data.requiredFluid}}ml X {{data.dropsPerMl}}drops/ml = {{data.dailyDrops}}drops/day
+    </div>
+    <div class="centered">
+        The number of seconds in a day is 86400 (24 hours X 60 minutes X 60 seconds)
+    </div>
+    <div class="centered formula">
+        Drops per Second = {{data.dailyDrops}}drop/day / 86400 = {{data.dropsPerSec}}drops/second<br>
+        Seconds per Drop = 1 / {{data.dropsPerSec}}drops/second = {{data.unroundedSecPerDrop}}seconds/drop
+    </div>
+    <div class="centered">
+        This must then be rounded down to the nearest second
+    </div>
+    <div class="centered answerText">
+         Answer = {{data.ANS}} seconds/drop
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
