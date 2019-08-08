@@ -183,6 +183,19 @@ label {
   font-size: 1.5vw;
 }
 
+.message {
+  text-align: center;
+  margin: 1% auto 1% auto;
+  padding: 0.5% 0 0.5% 0;
+  border: 2px solid black;
+  font-size: 1vw;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: none;
+}
+
 #regbtn {
   margin: 1% 0 1% 0;
   font-size: 1.3vw;
@@ -193,6 +206,11 @@ label {
 #regbtn:hover {
   background-color: white;
   color: black;
+}
+
+.required {
+  margin: 0 auto 1% auto;
+  font-size: 1vw;
 }
 
 /*# sourceMappingURL=registration.css.map */

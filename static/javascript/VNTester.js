@@ -38,8 +38,8 @@ $('#regbtn').click(function() {
     if (msg) {
         let blinks = document.getElementsByClassName("blink");
         comment.innerHTML = msg;
-        comment.style.display = "block";
         comment.classList.add("alert");
+        comment.style.display = "block";
         setTimeout(function() {
             comment.classList.remove("alert");
             comment.style.backgroundColor = "rgb(255, 255, 255, 0.8)";

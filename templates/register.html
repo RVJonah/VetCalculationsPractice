@@ -7,25 +7,27 @@ Vet Calculations Registration
 {% block main %}
 <link href="/static/css/registration.css" rel="stylesheet" type="text/css">
 <div class="mtitle">Please enter your details below to register and take tests</div>
-<div class="flexcontainerreg">
+<div class="centered">
     <form id="regform" action="/register" method="post">
         <div class="formdiv">
-            <label>Username: </label>
+            <label>Username*: </label>
             <input type="text" class="answerboxlongest" name="username" id="username" title="Username" autocomplete="off">
-            <label>Password: </label>
+            <label>Password*: </label>
             <input type="password" class="answerboxlongest" name="pass" id="regpass" title="Password" autocomplete="off">
-            <label>Confirm Password: </label>
+            <label>Confirm Password*: </label>
             <input type="password" class="answerboxlongest" name="confpass" id="confpass" title="Confirmed Password" autocomplete="off">
-            <label>Email: </label>
+            <label>Email*: </label>
             <input type="email" class="answerboxlongest" name="email" id="regemail" title="Email" autocomplete="off">
-            <label>Confirm Email: </label>
+            <label>Confirm Email*: </label>
             <input type="email" class="answerboxlongest" name="confemail" id="confemail" title="Confirmed Email" autocomplete="off">
-            <label>First Name: </label>
+            <label>First Name*: </label>
             <input type="text" class="answerboxlongest" name="firstname" id="firstname" title="First Name" autocomplete="off">
-            <label>Last Name: </label>
+            <label>Last Name*: </label>
             <input type="text" class="answerboxlongest" name="lastname" id="lastname" title="Last Name" autocomplete="off">
             <label>College: </label>
-            <input type="text" class="answerboxlongest" name="college" title="College" autocomplete="off"></div>
+            <input type="text" class="answerboxlongest" name="college" title="College" autocomplete="off">
+            <div class="required">*Required</div>
+        </div>
             <div class="centered"><button type="button" id="regbtn">Submit</button></div>
         </div>
     </form>
