@@ -5,14 +5,11 @@ Anaesthetic Gas Flow Calculations
 {% endblock %}
 
 {% block main %}
-<script>
-document.getElementsByTagName("Main")[0].style.backgroundColor = "#e0e0eb";
-document.getElementsByTagName("Main")[0].style.border = "3px solid #5c8a8a";
-</script>
+<link href="../static/css/theatre.css" rel="stylesheet" type="text/css">
 <div id="maxanswer" style="display:none;">{{data.maxGasFlow}}</div>
 <div id="minanswer" style="display:none;">{{data.minGasFlow}}</div>
 <div class="flexcontainer">
-<div class="flexbox2"><img class="pPic"{% if data.species == "Cat"%} src="/static/Cat.jpg"{% else %}src="/static/Dog.jpg"{% endif %}></div>
+<div class="flexbox2"><img class="pPic"{% if data.species == "Cat"%} src="/static/images/Cat.jpg"{% else %}src="/static/images/Dog.jpg"{% endif %}></div>
 <div class="flexbox2">
     <h3>Patient Details</h3>
     <ul class="pDetails">

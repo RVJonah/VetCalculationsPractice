@@ -9,6 +9,10 @@ function requesttest(TType, repeat) {
             document.getElementById("returnbtn").style.display = "none"
         }
         document.getElementById("resultdiv").style.display = "none"
+        if (repeat == 1) {
+            document.getElementsByClassName("flexcontainer")[0].style.display = "none"
+            document.getElementsByClassName("flexcontainer")[1].style.display = "none"
+        }
         runtest(data)
     })
 }
@@ -27,14 +31,16 @@ var answers = {
 function runtest(data) {
     $("#tester").remove()
     $("#startbtn").remove()
+    document.getElementById("testdiv1").style.display = "flex"
+    document.getElementById("testdiv1").style.flex = "row"
     questions = data
     answers['TType'] = data[10]
     let questdiv1 = document.createElement('div')
     questdiv1.setAttribute('id', 'questdiv1')
-    questdiv1.setAttribute('class', "flexbox2")
+    questdiv1.setAttribute('class', "quest")
     let questdiv2 = document.createElement('div')
     questdiv2.setAttribute('id', 'questdiv2')
-    questdiv2.setAttribute('class', "flexbox2")
+    questdiv2.setAttribute('class', "quest")
     let answer = document.createElement('div')
     answer.setAttribute('id', 'answerdiv')
     let prev = document.createElement('BUTTON')
@@ -60,7 +66,6 @@ function runtest(data) {
     complete.setAttribute("onclick", "sendAnswers(answers)")
     complete.innerHTML = "Complete"
     let test1 = document.getElementById('testdiv1')
-    test1.style.backgroundColor = "white"
     let test2 = document.getElementById('testdiv2')
     test1.appendChild(questdiv1)
     test1.appendChild(questdiv2)
@@ -97,8 +102,6 @@ function qmove(move, questions) {
     if (qNum < 9 && document.getElementById("nextbtn").disabled === true) {
         document.getElementById("nextbtn").disabled = false
     }
-
-    document.getElementById("testdiv1").style.border = "solid black"
     // adds question number to top of screen
     document.getElementById('questionNum').innerHTML = `<h3>Question ${qNum + 1}</h3>`
 
@@ -138,41 +141,49 @@ function qmove(move, questions) {
     }
     if (questions[qNum]['questType'] === "gasFlow") {
         document.getElementById('questdiv1').innerHTML =
-            `<ul><li>Species: ${questions[qNum]["species"]}</li>\n\
+            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
+            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
             <li>Weight: ${questions[qNum]["bodyweight"]}kg</li> \n\
             <li>Respiration Rate: ${questions[qNum]["respirationRate"]} breaths per minute</li></ul> \n\
         `
         document.getElementById('questdiv2').innerHTML =
-            `<ul><li>Circuit Type: ${questions[qNum]["circuit"]} circuit</li> \n\
+            `<div style="padding-left: 10%; text-decoration: underline;">Circuit Details</div>\n\
+            <ul><li>Circuit Type: ${questions[qNum]["circuit"]} circuit</li> \n\
             <li>Circuit Factor: ${questions[qNum]["minFactor"]}-${questions[qNum]["maxFactor"]} </li></ul>  \n\
         `
     }
     if (questions[qNum]['questType'] === "Injectable") {
         document.getElementById('questdiv1').innerHTML =
-            `<ul><li>Species: ${questions[qNum]["species"]}</li>\n\
+            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
+            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
             <li>Weight: ${questions[qNum]["bodyweight"]}kg</li></ul>`
         if (questions[qNum]['lType'] === 1) {
             document.getElementById('questdiv2').innerHTML =
-                `<ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
+                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
+                <ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
                 <li>Injectable Concentration: ${questions[qNum]["medStrength"]}mg/ml solution</li></ul>`
         } else {
             document.getElementById('questdiv2').innerHTML =
-                `<ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
+                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
+                <ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
                 <li>Injectable Concentration: ${questions[qNum]["percMedStrength"]}% solution</li></ul>`
         }
     }
     if (questions[qNum]['questType'] === "Fluids") {
         document.getElementById('questdiv1').innerHTML =
-            `<ul><li>Species: ${questions[qNum]["species"]}</li>\n\
+            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
+            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
             <li>Weight: ${questions[qNum]["bodyweight"]}kg</li></ul>`
         if (questions[qNum]["dehydration"] === 0) {
             document.getElementById('questdiv2').innerHTML =
-                `<ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li></ul>`
+                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
+                <ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li></ul>`
         } else {
             document.getElementById('questdiv2').innerHTML =
-                `<ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li>  \n\
+                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
+                <ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li>  \n\
                 <li>Pecentage Dehydration: ${questions[qNum]["dehydration"]} % </li> \n\
-                <li>Ongoing Fluid Loss Per Day: ${questions[qNum]["onGoingLoss"]}ml/day </li></ul>`
+                <li>Ongoing Fluid Loss Per Day: ${questions[qNum]["onGoingLoss"]}ml/day </li><ul>`
         }
         if (questions[qNum]['mlVsSec'] === 1) {
             let dropsPer = document.createElement('li')
@@ -248,7 +259,7 @@ function sendAnswers(answers) {
             qNum = 0
             document.getElementById("testpage").innerHTML = data
             document.getElementById("resultdiv").style.display = ""
-            document.getElementById("testdiv1").style.border = ""
+            document.getElementById("testdiv1").style.display = "none"
         })
     } else return 0
 }

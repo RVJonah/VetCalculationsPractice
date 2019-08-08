@@ -3,63 +3,74 @@
 <html lang="en">
 
     <head>
-
-        <!-- meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <link href="/static/CS.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png" />
+        <link href="/static/css/nav.css" rel="stylesheet" type="text/css">
         <title>{% block title %}{% endblock %}</title>
 
     </head>
 
     <body>
-            <ul  class="navbar">
+        <div class="navbar">
+            <ul class="navul">
                 <li><a href="/">Home</a></li>
                 <li><a href="/pharmacy">Pharmacy</a>
-                <div class="dropdown-content">
-                <div class="dropfirst">
-                    <a>Tablets ></a>
-                    <div class="dropdown-content2">
-                    <a href="/tabletcalc?q=teach">Teach Me</a>
-                    <a href="/tabletcalc?q=quiz">Quiz Me</a>
-                </div>
-                </div>
-                <div class="dropsecond">
-                    <a>Liquids ></a>
-                    <div class="dropdown-content3">
-                    <a href="/liquidcalc?q=teach">Teach Me</a>
-                    <a href="/liquidcalc?q=quiz">Quiz Me</a>
-                </div>
-                </div>
-                </div></li>
-                <li><a href="/kennels">Kennels</a>
-                <div class="dropdown-content">
-                <div class="dropfirst"><a>Fluids ></a>
-                <div class="dropdown-content2">
-                    <a href="/fluidcalc?q=teach">Teach Me</a>
-                    <a href="/fluidcalc?q=quiz">Quiz Me</a>
-                </div>
-                </div></li>
-                <li><a href="/theatre">Theatre</a>
-                <div class="dropdown-content">
-                <div class="dropfirst"><a>Injectables ></a>
-                <div class="dropdown-content2">
-                    <a href="/injectioncalc?q=teach">Teach Me</a>
-                    <a href="/injectioncalc?q=quiz">Quiz Me</a>
-                </div></div>
-                <div class="dropsecond"> <a>Gas Flow ></a>
-                <div class="dropdown-content3">
-                    <a href="/gascalc?q=teach">Teach Me</a>
-                    <a href="/gascalc?q=quiz">Quiz Me</a>
-                </div></div
-                </div></li>
+                    <ul>
+                        <li>
+                            <a>Tablets ></a>
+                            <ul>
+                                <li><a href="/tabletcalc?q=teach">Teach Me</a></li>
+                                <li><a href="/tabletcalc?q=quiz">Quiz Me</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Liquids ></a>
+                            <ul>
+                                <li><a href="/liquidcalc?q=teach">Teach Me</a></li>
+                                <li><a href="/liquidcalc?q=quiz">Quiz Me</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/kennels">Kennels</a>
+                    <ul>
+                        <li><a>Fluids ></a>
+                            <ul>
+                                <li><a href="/fluidcalc?q=teach">Teach Me</a></li>
+                                <li><a href="/fluidcalc?q=quiz">Quiz Me</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/theatre">Theatre</a>
+                    <ul>
+                        <li>
+                            <a>Injectables ></a>
+                            <ul>
+                                <li><a href="/injectioncalc?q=teach">Teach Me</a></li>
+                                <li><a href="/injectioncalc?q=quiz">Quiz Me</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a>Gas Flow ></a>
+                            <ul>
+                                <li><a href="/gascalc?q=teach">Teach Me</a></li>
+                                <li><a href="/gascalc?q=quiz">Quiz Me</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 <li><a href="/test">Test</a></li>
                 <li><a href="/account">My Account</a></li>
                 {% if session == {} %}<li><a href="/login">Log In</a></li>
                 {% else %}<li><a href="/logout">Log Out</a></li>{% endif %}
             </ul>
+        </div>
         <main style="padding: 15px;">
             {% block main %}{% endblock %}
         </main>
@@ -67,5 +78,5 @@
         </footer>
     </body>
     {% block footer %}{% endblock %}
-    <script src="/static/VNTester.js"></script>
+    <script src="/static/javascript/VNTester.js"></script>
 </html>

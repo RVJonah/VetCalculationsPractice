@@ -5,9 +5,11 @@ My account
 {% endblock %}
 
 {% block main %}
-<div class="mtitle">Current results for: {{ student[0]['Username']}}</div>
+<link href="/static/css/account.css" rel="stylesheet" type="text/css">
 
-<div><table class="resultTable">
+<p class="mtitle">Current results for: {{ student[0]['username']}}</p>
+
+<p><table class="resultTable">
     <tr>
     <th>Test Type</th>
     <th>Best Score</th>
@@ -43,16 +45,18 @@ My account
         <td class="hazard">{{ bestResult['Hazard'] }}</td>
         <td class="hazard">{{ attempts['Hazard'] }} {% if attempts['Hazard'] == 1%}test{% else %}tests{% endif %}</td>
     </tr>
-</table></div>
-<div class="centered mtitle" style="margin-top: 2%;">
-    Please use the form below to update your details
-<form class="sDetails" id="updateform">
-    <div id="storedEmail">Current Email Address: {{student[0]['Email']}}</div>
-    New Email Address: <input type="email" class="answerboxlong" name="updemail" autocomplete="off"><br>
-
-    New Password: <input type="password" class="answerbox" name="updpass" autocomplete="off"><br>
-    Confirm New Password: <input type="password" class="answerbox" name="updconpass" autocomplete="off">
-</form>
-<div class="sDetails"><div style="padding-left:5%;"><input type="button" class="updatebtn centered" value="Submit Changes" onclick="update()"></div></div>
-<div id="comment" class="sDetails"></div></div>
+</table></p>
+<div class="formdiv">
+    <div class="centered atitle">
+        Please use the form below to update your details
+    </div>
+    <form class="sDetails" id="updateform">
+        <label>Current Email Address: </label> <span id="storedEmail">{{student[0]['email']}}</span><br>
+        <label>New Email Address: </label> <input type="email" class="updatebox" name="updemail" autocomplete="off"><br>
+        <label>New Password: </label> <input type="password" class="updatebox" name="updpass" autocomplete="off"><br>
+        <label>Confirm New Password: </label> <input type="password" class="updatebox" name="updconpass" autocomplete="off"><br>
+    </form>
+    <p class="centered"><input type="button" class="updatebtn" value="Submit Changes" onclick="update()"><br></p>
+</div>
+<div id="comment" class="comment sDetails"></div>
 {% endblock %}

@@ -5,84 +5,32 @@ Vet Calculations Registration
 {% endblock %}
 
 {% block main %}
+<link href="/static/css/registration.css" rel="stylesheet" type="text/css">
 <div class="mtitle">Please enter your details below to register and take tests</div>
 <div class="flexcontainerreg">
-<form id="regform" action="/register" method="post">
-    <class="flexboxreg">
-        <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Username: </label>
+    <form id="regform" action="/register" method="post">
+        <div class="formdiv">
+            <label>Username: </label>
+            <input type="text" class="answerboxlongest" name="username" id="username" title="Username" autocomplete="off">
+            <label>Password: </label>
+            <input type="password" class="answerboxlongest" name="pass" id="regpass" title="Password" autocomplete="off">
+            <label>Confirm Password: </label>
+            <input type="password" class="answerboxlongest" name="confpass" id="confpass" title="Confirmed Password" autocomplete="off">
+            <label>Email: </label>
+            <input type="email" class="answerboxlongest" name="email" id="regemail" title="Email" autocomplete="off">
+            <label>Confirm Email: </label>
+            <input type="email" class="answerboxlongest" name="confemail" id="confemail" title="Confirmed Email" autocomplete="off">
+            <label>First Name: </label>
+            <input type="text" class="answerboxlongest" name="firstname" id="firstname" title="First Name" autocomplete="off">
+            <label>Last Name: </label>
+            <input type="text" class="answerboxlongest" name="lastname" id="lastname" title="Last Name" autocomplete="off">
+            <label>College: </label>
+            <input type="text" class="answerboxlongest" name="college" title="College" autocomplete="off"></div>
+            <div class="centered"><button type="button" id="regbtn">Submit</button></div>
         </div>
+    </form>
+    <p class="message"></p>
+</div>
 
-        <div class="answerboxlongest">
-            <input type="text" class="regbox" name="username" title="Username" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Password: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="password" class="regbox" name="pass" id="regpass" title="Password" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Confirm Password: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="password" class="regbox" name="confpass" id="confpass" title="Confirmed Password" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Email:  </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="email" class="regbox" name="email" id="regemail" title="Email" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Confirm Email: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="email" class="regbox" name="confemail" id="confemail" title="Confirmed Email" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>First Name: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="text" class="regbox" name="firstname" title="First Name" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>Last Name: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="text" class="regbox" name="lastname" title="Last Name" autocomplete="off">
-        </div>
-    </div>
-    <div class="flexrowreg">
-        <div class="labeldiv">
-              <label>College: </label>
-        </div>
-
-        <div class="answerboxlongest">
-            <input type="text" class="regbox" name="college" title="College" autocomplete="off"></div>
-        </div>
-    </div>
-    </div>
-     <div class="centered"><button type="button" style="font-size: 1vw" id="regbtn">Submit</button></div>
-</form>
 
 {% endblock %}

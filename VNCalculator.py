@@ -233,7 +233,7 @@ class Liquid(Cat, Dog):
 
         # if percentage solution modify medstrength to percentage
         if self.lType == 2:
-            self.percMedStrength = self.medStrength / 10
+            self.percMedStrength = self.medStrength * 10
 
         self.question = {
             'part1': "The above patient is being sent home with medication in liquid form. You have been asked to determine the volume of liquid required to complete the full course of treatment.",
@@ -318,6 +318,7 @@ def testGen(testType):
                 'species': question.species,
                 'symptom': question.symptom,
                 'dose': question.dose,
+                'lType': question.lType,
                 'courseLength': question.courseLength,
                 'medStrength': question.medStrength,
                 'wordDaily': question.wordDaily,
@@ -336,6 +337,8 @@ def testGen(testType):
                 'dehydration': question.dehydration,
                 'dailyFluids': question.dailyFluids,
                 'onGoingLoss': question.onGoingLoss,
+                'dropsPerMl': question.dropsPerMl,
+                'mlVsSec': question.mlVsSec,
                 'question': question.question
             }})
     if testType == "gasFlow":
@@ -384,9 +387,9 @@ def testGen(testType):
                     'courseLength': question.courseLength,
                     'medStrength': question.medStrength,
                     'wordDaily': question.wordDaily,
-                    'question': question.question,
+                    'question': question.question
                 }})
-            if qSelector == 2:
+            elif qSelector == 2:
                 question = Liquid()
                 data.update({i: {
                     'questType': 'Liquid',
@@ -395,6 +398,7 @@ def testGen(testType):
                     'species': question.species,
                     'symptom': question.symptom,
                     'dose': question.dose,
+                    'lType': question.lType,
                     'courseLength': question.courseLength,
                     'medStrength': question.medStrength,
                     'wordDaily': question.wordDaily,
@@ -402,19 +406,21 @@ def testGen(testType):
                 }})
                 if question.lType == 2:
                     data[i]['percMedStrength'] = question.percMedStrength
-            if qSelector == 3:
+            elif qSelector == 3:
                 question = Fluids()
                 data.update({i: {
                     'questType': 'Fluids',
                     'ANS': question.ANS,
                     'bodyweight': question.bodyweight,
                     'species': question.species,
-                    'deyhdration': question.dehydration,
+                    'dehydration': question.dehydration,
                     'dailyFluids': question.dailyFluids,
                     'onGoingLoss': question.onGoingLoss,
+                    'dropsPerMl': question.dropsPerMl,
+                    'mlVsSec': question.mlVsSec,
                     'question': question.question
                 }})
-            if qSelector == 4:
+            elif qSelector == 4:
                 question = Gasflow()
                 data.update({i: {
                     'questType': 'gasFlow',
@@ -429,7 +435,7 @@ def testGen(testType):
                     'maxGasFlow': question.maxGasFlow,
                     'question': question.question
                 }})
-            if qSelector == 5:
+            elif qSelector == 5:
                 question = Injectable()
                 data.update({i: {
                     'questType': 'Injectable',
@@ -440,7 +446,7 @@ def testGen(testType):
                     'ANS': question.ANS,
                     'question': question.question
                 }})
-            if question.lType == 2:
-                data[i]['percMedStrength'] = question.percMedStrength
+                if question.lType == 2:
+                    data[i]['percMedStrength'] = question.percMedStrength
     data.update({10: testType})
     return data

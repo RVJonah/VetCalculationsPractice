@@ -5,16 +5,14 @@ Fluid Therapy Calculations
 {% endblock %}
 
 {% block main %}
-
 <script>
-document.getElementsByTagName("Main")[0].style.backgroundColor = "#cce5ff";
-document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
 </script>
+<link href="../static/css/kennels.css" rel="stylesheet" type="text/css">
 <div class="flexcontainer">
 <div class="flexbox2 infodiv">
-    Understanding fluid therapy calculations is very important due to the severe effects of over hydrating or under hydrating our patients.<br>
-    To the right you will see patient details that will be provided by the question or found on the patients notes if you are in practice.<br>
+    Understanding fluid therapy calculations is very important due to the severe effects of over hydrating or under hydrating patients.<br>
      <br>
+    To the right you will see patient details that will be provided by the question or found on the patients notes if you are in practice.<br>
     The question information will be provided in the box below.
     It is important to note whether you are expected to give your answer in millitres per hour(ml/hr) or seconds per drop (s/drop).
     The ml/hr calculations are using used when calculating fluid given via an automated fluid pump.
@@ -44,9 +42,10 @@ document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
     <input type="button" class="smallbtn" onclick="window.location.href='/tabletcalc?q=teach'" style="float:right;" value="Next Example"><br>
      <br>
 </div>
+<div class="flexcontainer">
 <div class="teachkennel">
     Below is a step by step guide to solving these types of calculation:<br>
-    This half covers calculations in millilires per hour
+    This half covers calculations in millilitres per hour
     <div class="centered">
         First we must calculate the maintenance fluid required by the patient
     </div>
@@ -152,6 +151,7 @@ document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
     <div class="centered answerText">
          Answer = {{data.ANSdrop}} seconds/drop
     </div>
+</div>
 </div>
 
 {% endblock %}

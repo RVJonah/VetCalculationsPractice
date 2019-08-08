@@ -5,10 +5,10 @@ Oral Liquid Calculations
 {% endblock %}
 
 {% block main %}
-
+<link href="../static/css/pharmacy.css" rel="stylesheet" type="text/css">
 <div id="answer" style="display:none;">{{data.ANS}}</div>
 <div class="flexcontainer">
-<div class="flexbox2"><img class="pPic"{% if data.species == "Cat"%} src="/static/Cat.jpg"{% else %}src="/static/Dog.jpg"{% endif %}></div>
+<div class="flexbox2"><img class="pPic"{% if data.species == "Cat"%} src="/static/images/Cat.jpg"{% else %}src="/static/images/Dog.jpg"{% endif %}></div>
 <div class="flexbox2">
     <h3>Patient Details</h3>
     <ul class="pDetails">

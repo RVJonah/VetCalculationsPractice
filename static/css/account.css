@@ -1,0 +1,207 @@
+@keyframes flicker {
+  from {
+    border: thin solid black;
+  }
+  to {
+    border: thin solid red;
+  }
+}
+@keyframes alert {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.blink {
+  animation-name: flicker;
+  animation-duration: 1s;
+  animation-iteration-count: 3;
+  animation-direction: normal;
+}
+
+.alert {
+  animation-name: alert;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-play-state: "running";
+}
+
+body {
+  background-color: #EEF8E3;
+}
+
+.centered {
+  text-align: center;
+}
+
+.comment {
+  text-align: center;
+  margin: 1% auto 1% auto;
+  padding: 0.5% 0 0.5% 0;
+  border: 2px solid black;
+  font-size: 2vw;
+  font-weight: bold;
+  color: black;
+  background-color: #a0c4ee;
+  display: none;
+}
+
+.flexcontainer {
+  display: flex;
+  flex-wrap: nowrap;
+  border: solid 1px black;
+  margin-bottom: 10px;
+  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.formdiv {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 30%;
+  border: solid thin black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+  border-radius: 25px;
+}
+
+h1 {
+  font-size: 3vw;
+  color: white;
+}
+
+h3 {
+  text-align: center;
+  text-decoration: underline;
+  font-size: 1.6vw;
+}
+
+.mtitle {
+  text-align: center;
+  font-size: 2vw;
+  margin-bottom: 5px;
+  color: white;
+}
+
+@keyframes flicker {
+  from {
+    border: thin solid black;
+  }
+  to {
+    border: thin solid red;
+  }
+}
+@keyframes alert {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.blink {
+  animation-name: flicker;
+  animation-duration: 1s;
+  animation-iteration-count: 3;
+  animation-direction: normal;
+}
+
+.alert {
+  animation-name: alert;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-play-state: "running";
+}
+
+body {
+  background-image: url("../images/account_background.jpg");
+  background-size: 100%;
+  background-repeat: none;
+  background-blend-mode: darken;
+}
+
+.updatebox {
+  width: 30%;
+  font-size: 1vw;
+  margin: 0px 3px 0px 3px;
+  border: 1px solid black;
+}
+
+label {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+  font-size: 1vw;
+}
+
+.resultTable {
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10px;
+  text-align: center;
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.5);
+  overflow-x: auto;
+  font-size: 1.5vw;
+}
+.resultTable th {
+  border: 1px solid black;
+}
+.resultTable td {
+  border: 1px solid black;
+}
+.resultTable tr {
+  padding: 5px;
+}
+
+.sDetails {
+  width: 100%;
+  line-height: 2;
+  font-size: 1.4vw;
+  color: black;
+  align-content: center;
+}
+
+.atitle {
+  text-align: center;
+  font-size: 2vw;
+  margin: 5px;
+  color: black;
+}
+
+.updatebtn {
+  width: 50%;
+  background-color: #000288;
+  color: white;
+  font-size: 1.3vw;
+}
+
+.updatebtn:hover {
+  background-color: white;
+  color: black;
+}
+
+.kennels {
+  background-color: rgba(0, 101, 252, 0.8);
+}
+
+.pharmacy {
+  background-color: rgba(200, 255, 149, 0.8);
+}
+
+.theatre {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.hazard {
+  background-color: rgba(255, 255, 102, 0.8);
+  padding-bottom: 5px;
+}
+
+/*# sourceMappingURL=account.css.map */

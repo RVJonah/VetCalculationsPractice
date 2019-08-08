@@ -1,0 +1,52 @@
+@import "variables";
+@import "animations";
+body {
+    background-color: $back-ground-colour;
+}
+.centered {
+    text-align:center;
+} 
+.comment {
+    text-align: center;
+    margin: 1% auto 1% auto;
+    padding: 0.5% 0 0.5% 0;
+    border: 2px solid black;
+    font-size: 2vw;
+    font-weight: bold;
+    color: black;
+    background-color: rgb(160, 196, 238);
+    display: none;
+}
+.flexcontainer {
+    display: flex;
+    flex-wrap: nowrap;
+    border: solid 1px black;
+    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255, 0.8);
+}
+.formdiv {
+    background-color: rgb(255, 255, 255, 0.8);
+    width:30%;
+    border:solid thin black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+    border-radius: 25px;
+} 
+h1 {
+    font-size: 3vw;
+    color: white;
+}
+  
+h3 {
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.6vw;
+}
+.mtitle {
+    text-align:center;
+    font-size: 2vw;
+    margin-bottom: 5px;
+    color: white;
+} 

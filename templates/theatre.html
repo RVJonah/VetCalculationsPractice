@@ -5,20 +5,29 @@ Veterinary Calculations Theatre
 {% endblock %}
 
 {% block main %}
+<link href="/static/css/theatre.css" rel="stylesheet" type="text/css">
 <div class="flexcontainer">
 <div class="flexbox2">
-    <img src="/static/Injectable.jpg" class="testimage">
+    <p class="frame">
+        <img src="/static/images/Injectable.jpg" class="testimage">
+    </p>
     <h3 class="centered">Injectable Medicine Calculations</h3>
-    <a class="teachme" href="/injectioncalc?q=teach">Teach Me</a>
-    <a class="quizme" href="/injectioncalc?q=quiz">Quiz Me</a>
-    <a class="testme" href="/test">Test Me</a>
+    <ul class="arealink">
+            <li><a class="teachme" href="/injectioncalc?q=teach">Teach Me</a></li>
+            <li><a class="quizme" href="/injectioncalc?q=quiz">Quiz Me</a></li>
+            <li><a class="testme" href="/test">Test Me</a></li>
+        </ul>
     </div>
 <div class="flexbox2">
-    <img src="/static/Anaesthetic.jpg" class="testimage">
+    <p class="frame">
+        <img src="/static/images/Anaesthetic.jpg" class="testimage">
+    </p>
     <h3 class="centered">Anaesthetic Gas Flow Calculations</h3>
-    <a class="teachme" href="/gascalc?q=teach">Teach Me</a>
-    <a class="quizme" href="/gascalc?q=quiz">Quiz Me</a>
-    <a class="testme" href="/test">Test Me</a>
+    <ul class="arealink">
+            <li><a class="teachme" href="/gascalc?q=teach">Teach Me</a></li>
+            <li><a class="quizme" href="/gascalc?q=quiz">Quiz Me</a></li>
+            <li><a class="testme" href="/test">Test Me</a></li>
+        </ul>
     </div>
 </div>
 {% endblock %}

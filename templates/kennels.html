@@ -5,14 +5,19 @@ Veterinary Calculations Kennels
 {% endblock %}
 
 {% block main %}
+<link href="/static/css/kennels.css" rel="stylesheet" type="text/css">
 <div class="flexcontainer">
 <div class="flexbox2">
-    <img src="/static/Fluids.jpg" class="testimage">
+    <p class="frame">
+        <img src="/static/images/Fluids.jpg" class="testimage">
+    </p>
     <h3 class="centered">Fluid Therapy Calculations</h3>
-    <a class="teachme" href="/fluidcalc?q=teach">Teach Me</a>
-    <a class="quizme" href="/fluidcalc?q=quiz">Quiz Me</a>
-    <a class="testme" href="/test">Test Me</a>
-    </div>
+    <ul class="arealink">
+        <li><a class="teachme" href="/fluidcalc?q=teach">Teach Me</a></li>
+        <li><a class="quizme" href="/fluidcalc?q=quiz">Quiz Me</a></li>
+        <li><a class="testme" href="/test">Test Me</a></li>
+    </ul>
+</div>
 <div class="flexbox2">
     </div>
 </div>

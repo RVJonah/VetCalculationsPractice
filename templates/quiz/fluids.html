@@ -5,22 +5,18 @@ Fluid Therapy Calculations
 {% endblock %}
 
 {% block main %}
-
-<script>
-document.getElementsByTagName("Main")[0].style.backgroundColor = "#cce5ff";
-document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
-</script>
+<link href="../static/css/kennels.css" rel="stylesheet" type="text/css">
 <div id="answer" style="display:none;">{{data.ANS}}</div>
 <div class="flexcontainer">
-<div class="flexbox2"><img class="pPic" src{% if data.species == "Cat"%}="/static/Cat.jpg"{% elif data.species == "Dog" %}="/static/Dog.jpg"{% else %}="/static/Rabbit.jpg"{% endif %}></div>
+<div class="flexbox2"><img class="pPic" src{% if data.species == "Cat"%}="/static/images/Cat.jpg"{% elif data.species == "Dog" %}="/static/images/Dog.jpg"{% else %}="/static/images/Rabbit.jpg"{% endif %}></div>
 <div class="flexbox2">
     <h3>Patient Details</h3>
     <ul class="pDetails">
     <li>Species: {{data.species}}</li>
     <li>Weight: {{data.bodyweight}}kg</li>
-    {% if data.dehydration > 0 %}<li>Percentage Dehydration: {{data.dehydration}}%</li>
+    {% if data.dehydration > 0 %}<li>Percentage Dehydration: {{data.dehydration}}%</li>{% endif %}
     {% if data.onGoingLoss > 0 %}<li>Ongoing Fluid Loss per Day: {{data.onGoingLoss}}ml/day </li>{% endif %}
-    <li>Giving Set Drops per ml: {{data.dropsPerMl}}</li>{% endif %}
+    {% if data.mlVsSec == 1 %}<li>Giving Set Drops per ml: {{data.dropsPerMl}}</li>{% endif %}
     <li>Maintenance Fluid Rate: {{data.dailyFluids}}ml/kg</li>
     </ul>
 </div>
@@ -29,7 +25,7 @@ document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
 {{data.question.part2}}<input type="number" class="answerbox">{{data.question.part4}} <br>
     {{data.question.part3}}{{data.question.part5}}
 </div>
-<div class="comment"></div>
+<p class="comment"></p>
 <div style="margin-bottom: 10px;">
     <input type="button" class="smallbtn hintbtn" onclick="hintreveal()" value="Help Me!">
     <input type="button" class="smallbtn answerbtn" onclick="answerreveal()" value="Show Answer">
@@ -87,7 +83,7 @@ document.getElementsByTagName("Main")[0].style.border = "3px solid #0000ff";
     </div>
     {% if data.dehydration > 0 %}
     <div class="centered formula">
-        Fluid to Rehydrate = {{data.bodyweight}} X 1000 X ({{data.dehydration}} / 100) <br>
+        Fluid to Rehydrate = {{data.bodyweight}} X 1000 X ({{data.dehydration}} / 100) = {{data.replace}}ml  <br>
         Total Fluid Replacement Requirement = {{data.replace}}ml + {{data.onGoingLoss}}ml = {{data.replaceLoss}}ml
     </div>
     <div class="centered">

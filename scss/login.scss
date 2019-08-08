@@ -1,0 +1,47 @@
+@import "cs";
+@import "information";
+body {
+  background-image: url("../images/login_background.jpg");
+  background-size: 100%;
+  background-repeat: none;
+  background-blend-mode: darken;
+}
+#login {
+  font-size: 1.5vw;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+}
+#login input {
+  font-size: 1.5vw;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+#logbtn {
+  margin: 1% 0 1% 0;
+  font-size: 1.3vw;
+  background-color: $nav-colour;
+  color: white;
+}
+#logbtn:hover {
+  background-color: white;
+  color: black;
+}
+.formitem {
+  margin-bottom: 3px;
+  font-size: 1.5vw;
+  padding-left: 10px;
+  color: black;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:hover {
+    color: red;
+  }
+}
+label {
+  display:block;
+  width: 50%;
+  text-align:right;
+}
