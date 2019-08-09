@@ -197,8 +197,11 @@ function answercheck(numOfAns) {
 
 function update() {
     fields = document.getElementById("updateform").getElementsByTagName("input");
+    if (fields[0].value == "" && fields[1].value == "" && fields[2].value == ""){
+        return false
+    }
     comment = document.getElementById("comment")
-    comment.style.width = "60%";
+    comment.style.width = "30%";
     if (fields[1].value != fields[2].value) {
         comment.innerHTML= "Passwords must match";
         comment.style.display = "block";
