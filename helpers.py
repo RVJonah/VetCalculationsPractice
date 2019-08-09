@@ -19,7 +19,7 @@ def login_required(f):
     # creates login required routes
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session["user_id"] is None:
+        if session.get(["user_id"]) is None:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
