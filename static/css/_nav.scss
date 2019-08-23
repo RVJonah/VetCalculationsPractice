@@ -1,0 +1,72 @@
+@import "variables";
+
+header{
+  grid-area: header;
+}
+nav {
+  background-color: $nav-colour; 
+  color: white;
+  font-size: 16px;
+}
+.navul {
+  display: block;
+  list-style: none;
+  width: 100%;
+  height: 3em;
+  margin: 0;
+  padding: 0;
+  line-height: 300%;
+  li {
+    width: 100%;
+    height: 3em;
+    display: none;
+    position: relative;
+    background-color: $nav-colour;
+    transition-property: background-color;
+    transition-duration: 1s;
+  }
+  li a {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+    height: 3em;
+    color: white;
+  }
+  li:hover {
+    background-color: $nav-background-hover;
+  }
+  li ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+  }
+  li:hover ul {
+    display:block;
+  }
+  ul ul li {
+    display: none;
+  }
+  ul li:hover li {
+    display:block;
+  }
+  ul ul {
+    left: 100%;
+    top: 0%;
+  }
+}
+.navul:before {
+  content: "Menu";
+}
+@media (min-width: 800px) {
+  .navul {
+    display: flex;
+    li {
+      display: block;
+    }
+  }
+  .navul:before {
+    content: "";
+  }
+}

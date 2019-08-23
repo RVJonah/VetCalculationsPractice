@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}
-Veterinary Calculations Kennels
+{% block head %}
+<link href="/static/css/rooms.css" rel="stylesheet" type="text/css">
+<link href="/static/css/kennels.css" rel="stylesheet" type="text/css">
+<title>Veterinary Calculations Kennels</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/kennels.css" rel="stylesheet" type="text/css">
-<div class="flexcontainer">
-<div class="flexbox2">
-    <p class="frame">
-        <img src="/static/images/Fluids.jpg" class="testimage">
-    </p>
-    <h3 class="centered">Fluid Therapy Calculations</h3>
-    <ul class="arealink">
-        <li><a class="teachme" href="/fluidcalc?q=teach">Teach Me</a></li>
-        <li><a class="quizme" href="/fluidcalc?q=quiz">Quiz Me</a></li>
-        <li><a class="testme" href="/test">Test Me</a></li>
-    </ul>
-</div>
-<div class="flexbox2">
-    </div>
-</div>
+<main>
+    <h1>Kennels</h1>
+    <article>
+        <section class="option1">
+            <h2>Fluid Therapy Calculations</h2>
+            <img src="/static/images/Fluids.jpg" alt="Drip bags">
+            <ul>
+                <li><a id="teachme" href="/fluidcalc/teach">Teach Me</a></li>
+                <li><a id="quizme" href="/fluidcalc/quiz">Quiz Me</a></li>
+                <li><a id="testme" href="/test">Test Me</a></li>
+            </ul>
+        </section>
+    </article>
+</main>
 {% endblock %}

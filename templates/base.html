@@ -5,78 +5,73 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="/static/javascript/helper.js"></script>
+        {% block head %}{% endblock %}
         <link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png" />
-        <link href="/static/css/nav.css" rel="stylesheet" type="text/css">
-        <title>{% block title %}{% endblock %}</title>
-
     </head>
 
     <body>
-        <div class="navbar">
-            <ul class="navul">
-                <li><a href="/">Home</a></li>
-                <li><a href="/pharmacy">Pharmacy</a>
-                    <ul>
-                        <li>
-                            <a>Tablets ></a>
-                            <ul>
-                                <li><a href="/tabletcalc?q=teach">Teach Me</a></li>
-                                <li><a href="/tabletcalc?q=quiz">Quiz Me</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a>Liquids ></a>
-                            <ul>
-                                <li><a href="/liquidcalc?q=teach">Teach Me</a></li>
-                                <li><a href="/liquidcalc?q=quiz">Quiz Me</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/kennels">Kennels</a>
-                    <ul>
-                        <li><a>Fluids ></a>
-                            <ul>
-                                <li><a href="/fluidcalc?q=teach">Teach Me</a></li>
-                                <li><a href="/fluidcalc?q=quiz">Quiz Me</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/theatre">Theatre</a>
-                    <ul>
-                        <li>
-                            <a>Injectables ></a>
-                            <ul>
-                                <li><a href="/injectioncalc?q=teach">Teach Me</a></li>
-                                <li><a href="/injectioncalc?q=quiz">Quiz Me</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a>Gas Flow ></a>
-                            <ul>
-                                <li><a href="/gascalc?q=teach">Teach Me</a></li>
-                                <li><a href="/gascalc?q=quiz">Quiz Me</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="/test">Test</a></li>
-                <li><a href="/account">My Account</a></li>
-                {% if session == {} %}<li><a href="/login">Log In</a></li>
-                {% else %}<li><a href="/logout">Log Out</a></li>{% endif %}
-            </ul>
-        </div>
-        <main style="padding: 15px;">
+        <header>
+            <nav>
+                <ul class="navul">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/pharmacy">Pharmacy</a>
+                        <ul>
+                            <li>
+                                Tablets
+                                <ul>
+                                    <li><a href="/tabletcalc/teach">Teach Me</a></li>
+                                    <li><a href="/tabletcalc/quiz">Quiz Me</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                Liquids
+                                <ul>
+                                    <li><a href="/liquidcalc/teach">Teach Me</a></li>
+                                    <li><a href="/liquidcalc/quiz">Quiz Me</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/kennels">Kennels</a>
+                        <ul>
+                            <li>Fluids
+                                <ul>
+                                    <li><a href="/fluidcalc/teach">Teach Me</a></li>
+                                    <li><a href="/fluidcalc/quiz">Quiz Me</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/theatre">Theatre</a>
+                        <ul>
+                            <li>Injectables
+                                <ul>
+                                    <li><a href="/injectioncalc/teach">Teach Me</a></li>
+                                    <li><a href="/injectioncalc/quiz">Quiz Me</a></li>
+                                </ul>
+                            </li>
+                            <li>Gas Flow
+                                <ul>
+                                    <li><a href="/gascalc/teach">Teach Me</a></li>
+                                    <li><a href="/gascalc/quiz">Quiz Me</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="/test">Test</a></li>
+                    <li><a href="/account">My Account</a></li>
+                    {% if session == {} %}<li><a href="/login">Log In</a></li>
+                    {% else %}<li><a href="/logout">Log Out</a></li>{% endif %}
+                </ul>
+            </nav>
+        </header>
             {% block main %}{% endblock %}
-        </main>
-        <footer>
-        </footer>
     </body>
-    {% block footer %}{% endblock %}
-    <script src="/static/javascript/VNTester.js"></script>
+    <footer>
+            {% block footer %}{% endblock %}
+    </footer>
 </html>

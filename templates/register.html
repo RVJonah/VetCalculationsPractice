@@ -1,38 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}
-Vet Calculations Registration
+{% block head %}
+<script src="/static/javascript/registration.js"></script>
+<link href="/static/css/registration.css" rel="stylesheet" type="text/css">
+<title>Vet Calculations Registration</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/registration.css" rel="stylesheet" type="text/css">
-<div class="mtitle">Please enter your details below to register and take tests</div>
-<div class="centered">
-    <form id="regform" action="/register" method="post">
-        <div class="formdiv">
-            <label>Username*: </label>
-            <input type="text" class="answerboxlongest" name="username" id="username" title="Username" autocomplete="off">
-            <label>Password*: </label>
-            <input type="password" class="answerboxlongest" name="pass" id="regpass" title="Password" autocomplete="off">
-            <label>Confirm Password*: </label>
-            <input type="password" class="answerboxlongest" name="confpass" id="confpass" title="Confirmed Password" autocomplete="off">
-            <label>Email*: </label>
-            <input type="email" class="answerboxlongest" name="email" id="regemail" title="Email" autocomplete="off">
-            <label>Confirm Email*: </label>
-            <input type="email" class="answerboxlongest" name="confemail" id="confemail" title="Confirmed Email" autocomplete="off">
-            <label>First Name*: </label>
-            <input type="text" class="answerboxlongest" name="firstname" id="firstname" title="First Name" autocomplete="off">
-            <label>Last Name*: </label>
-            <input type="text" class="answerboxlongest" name="lastname" id="lastname" title="Last Name" autocomplete="off">
-            <label>College: </label>
-            <input type="text" class="answerboxlongest" name="college" title="College" autocomplete="off">
-            <div class="required">*Required</div>
-        </div>
-            <div class="centered"><button type="button" id="regbtn">Submit</button></div>
-        </div>
-    </form>
-    <p class="message"></p>
-</div>
-
-
+<main>
+        <h1>Registration</h1>
+        <section>
+                <form action="/register" method="post" id="regform" class="form">
+                        <fieldset>
+                                <legend>Enter your details</legend>
+                                <label for="username">Username: </label><input type="text" name="username" id="username" title="Username">
+                                <label for="regpass">Password: </label><input type="password" name="pass" id="regpass" title="Password">
+                                <label for="confpass">Confirm Password:</label><input type="password" name="confpass" id="confpass" title="Confirmed Password" autocomplete="off">
+                                <label for="regemail">Email*: </label><input type="email" name="email" id="regemail" title="Email">
+                                <label for="confemail">Confirm Email: </label><input type="email" name="confemail" id="confemail" title="Confirmed Email" autocomplete="off">
+                                <label for="firstname">First Name: </label><input type="text" name="firstname" id="firstname" title="First Name">
+                                <label for="lastname">Last Name: </label><input type="text" name="lastname" id="lastname" title="Last Name">
+                                <label for="college">College: </label><input type="text" name="college" title="College">
+                                <div><button type="submit" id="regbtn">Register</button></div>
+                        </fieldset>
+                </form>
+                <p id="comment"></p>
+        </section>
+</main>
 {% endblock %}

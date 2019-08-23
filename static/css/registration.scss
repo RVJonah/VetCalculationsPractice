@@ -1,0 +1,57 @@
+@import "basecs";
+
+body {
+    background-image: url("../images/register_background.jpg");
+}
+#comment {
+    width: 80%;
+    margin: 2% auto 2% auto;
+    background-color: rgb(144, 196, 238);
+    border: 2px solid black;
+    font-size: 1.5em;
+    line-height: 150%;
+    text-align: center;
+    display: none;
+}
+fieldset {
+    border-radius: 2em;
+}
+form {
+    font-size: 1.3em;
+    margin: 5% 0 5% 0;
+    padding: 0;
+    display: inline-block;
+    width: 80%;
+    text-align: justify;
+    input {
+      margin: 0.5% 0 0.5% 0;
+      width: 40%;
+      border: 1px solid black;
+    }
+    div {
+        text-align: center;
+        margin: 3% 0 3% 0;
+    }
+}
+legend {
+    margin-left: 2em;
+}
+label {
+    display: inline-block;
+    margin: 0.5% auto 1% auto;
+    width: 50%;
+    text-align: right;
+    line-height: 150%;
+}
+section {
+    grid-column: 1/ 9;
+    grid-row: 4 / 6;  
+    border: 1px solid black;
+    border-radius: 2em; 
+}
+@media (min-width: 1000px) {
+    section {
+        grid-column: 4/ 6;
+        grid-row: 4 / 6;
+    }
+}

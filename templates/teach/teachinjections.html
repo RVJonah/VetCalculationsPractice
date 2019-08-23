@@ -1,71 +1,91 @@
 {% extends "base.html" %}
 
-{% block title %}
-Injectable Drug Calculations
+{% block head %}
+<script src="../static/javascript/teach.js"></script>
+<link href="../static/css/theatre.css" rel="stylesheet" type="text/css">
+<link href="../static/css/questions.css" rel="stylesheet" type="text/css">
+<title>Injectable Drug Calculations</title>
 {% endblock %}
 
 {% block main %}
-<link href="../static/css/theatre.css" rel="stylesheet" type="text/css">
-<div class="flexcontainer">
-<div class="flexbox2 infodiv">
-    Administering the correct volume of an injectable medication is vital to prevent toxic effects from overdosing as well as
-    inaffective treatment due to underdosing.<br>
-     <br>
-    The patient's details, alongside the details of the medication can be found in the box on the right.
-    Note that drug doses are based on the animal's bodyweight. Also note whether the concentration of the medication is given
-    as a percentage (%) or in milligrams per millilitre (mg/ml).
-     <br>
-    A sample question can be found in the box below and a detailed explanation of the calculation based on the details on the right
-     can be found underneath.
-</div>
-<div class="flexbox2">
-    <h3>Patient Details</h3>
-    <ul class="pDetails">
-    <li>Species: {{data.species}}</li>
-    <li>Weight: {{data.bodyweight}}kg</li>
-    <li>Max Dose Rate: {{data.dose}}mg/kg</li>
-    <li>Injectable Concentration: {% if data.lType == 1 %}{{data.medStrength}}mg/ml {% else %}{{data.percMedStrength}}% Solution{%endif%}</li>
-    </ul>
-</div>
-</div>
-<div class="question">
-        {{data.question.part1}}<br>
-        {{data.question.part2}}<br>
-        {{data.question.part3}}
-</div>
-<div class="comment"></div>
-<div style="margin-bottom: 10px;">
-    <input type="button" class="smallbtn floatbtn" onclick="window.location.href='/injectioncalc?q=teach'" value="Next Question"><br>
-     <br>
-</div>
-<div class="teachtheatre">
-    Below is a step by step guide to solving this type of calculation:
-    <div class="centered">
-        First we calculate the number of milligrams required to be administered to the patient:
-    </div>
-    <div class="centered formula">
-        Mg per Dose = Bodyweight X Dose Rate<br>
-        Mg per Dose = {{data.bodyweight}}kg X {{data.dose}}mg/kg = {{data.mgPerDose}}mg
-    </div>
-    <div class="centered">
-        If the concentration is given as a percent solution this can be changed to a mg/ml concentration by multiplying by 10
-    </div>
-    {% if data.lType == 2 %}
-    <div class="centered formula">
-         Concentration = {{data.percMedStrength}}% X 10 = {{data.medStrength}}mg/ml <br>
-    </div>
-    {%endif%}
-    <div class="centered formula">
-        Volume to Inject = Mg per dose / Concentration of Injectable<br>
-        Volume to Inject = {{data.mgPerDose}}mg / {{data.medStrength}}mg/ml = {{data.unroundedVolumePerDose}}ml
-    </div>
-    <div class="centered">
-        This must then be rounded down to the nearest 0.1ml as necessary
-    </div>
-    <div class="centered answerText">
-        Volume to Inject = {{data.ANS}}ml
-    </div>
-</div>
+<main>
+    <article>
+        <h1>Injectable Drug Calculations</h1>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                Administering the correct volume of an injectable medication is vital to prevent toxic effects from overdosing as well as
+                inaffective treatment due to underdosing.
+            </p>
+            <p>
+                In these types of calculations it is important to note that drug doses are based on the animal's bodyweight. Also note 
+                whether the concentration of the medication is given as a percentage (%) or in milligrams per millilitre (mg/ml).
+            </p>
+            <p>
+                A sample <a href='#question'>question</a> is provided and a detailed <a href='#teach'>explanation</a> of the calculation based on example patient. 
+            </p>
+        </section>
+        <section id="patientdetail">
+            <h2>Patient Details</h2>
+            <ul>
+            <li>Species: {{data.species}}</li>
+            <li>Weight: {{data.bodyweight}}kg</li>
+            <li>Max Dose Rate: {{data.dose}}mg/kg</li>
+            <li>Injectable Concentration: {% if data.lType == 1 %}{{data.medStrength}}mg/ml {% else %}{{data.percMedStrength}}% Solution{%endif%}</li>
+            </ul>
+        </section>
+        <section id="question">
+            <h2>Question</h2>
+            <div>
+                <p>
+                    {{data.question.intro}}
+                </p>
+                <p>
+                    {{data.question.question}}
+                </p>
+                <p>
+                    {{data.question.otherinfo}}
+                </p>
+            </div>
+            <button class="next" id="newbtn">Next Example</button>
+        </section>
+        <section id="teach">
+            <h2>Example Injectable Drug calculation</h2>
+            <p>
+                Below is a step by step guide to solving this type of calculation:
+            </p>
+            <p>
+                First we calculate the number of milligrams required to be administered to the patient:
+            </p>
+            <p class="formula">
+                Mg per Dose = Bodyweight X Dose Rate
+            </p>
+            <p class="formula">
+                Mg per Dose = {{data.bodyweight}}kg X {{data.dose}}mg/kg = {{data.mgPerDose}}mg
+            </p>
+            <p>
+                If the concentration is given as a percent solution this can be changed to a mg/ml concentration by multiplying by 10
+            </p> 
+            {% if data.lType == 2 %}
+            <p class="formula">
+                Concentration = {{data.percMedStrength}}% X 10 = {{data.medStrength}}mg/ml
+            </p>
+            {%endif%}
+            <p class="formula">
+            Volume to Inject = Mg per dose / Concentration of Injectable
+            </p>
+            <p class="formula">
+            Volume to Inject = {{data.mgPerDose}}mg / {{data.medStrength}}mg/ml = {{data.unroundedVolumePerDose}}ml
+            </p>
+            <p>
+                This must then be rounded down to the nearest 0.1ml as necessary
+            </p>
+            <p class="finalanswer">
+                Volume to Inject = {{data.ANS}}ml
+            </p>
+        </section>
+    </article>
+</main>
 
 
 {% endblock %}

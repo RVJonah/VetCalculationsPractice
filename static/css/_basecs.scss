@@ -1,0 +1,91 @@
+@import "nav";
+@import "animations";
+article {
+    display: contents;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display:grid;
+    grid-template-columns: 5% repeat(6, 15%) 5%;
+    grid-template-rows: 5em repeat(6, auto); 
+    grid-row-gap: 0.3em;
+    grid-template-areas:
+        "header header header header header header header header"
+        ". title title title title title title ."
+        ". lefta lefta lefta lefta lefta lefta ."
+        ". righta righta righta righta righta righta ."
+        ".question question question question question question ."
+        ". hint hint hint hint hint hint ."
+        ". answer answer answer answer answer answer .";
+    background-size: 100%;
+    background-repeat: repeat-y;
+    text-align: center;
+    font-family: serif;
+    font-size: 12px;
+}
+button {
+    background-color: $nav-colour;
+    color: white;
+    line-height: 150%;
+    margin: 2% 1% 1% 0;
+    font-family: serif;
+    font-size: 16px;
+}
+button:disabled {
+    background-color: grey;
+} 
+button:hover {
+    background-color: black;
+}
+button:disabled:hover {
+    background-color: grey;
+} 
+#comment {
+    margin: 2% auto 2% auto;
+    background-color: rgb(144, 196, 238);
+    border: 2px solid black;
+    font-size: 1.5em;
+    text-align: center;
+    display: none;
+}
+h1 {
+    grid-area: title;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(255, 255, 255, 0.8);
+    border: 2px solid black;
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 1.5em;
+    text-decoration: underline;
+}
+main {
+    display: contents;
+}
+main p {
+    grid-column: 2 / 8;
+    grid-row: 3 / 4;
+}
+section {
+    background-color: rgb(255, 255, 255, 0.8);
+    border: 2px solid black;
+    margin: 2%;  
+}
+@media (min-width: 1000px) {
+    body {
+        grid-template-areas:
+            "header header header header header header header header"
+            ". title title title title title title ."
+            ". lefta lefta lefta righta righta righta ."
+            ".question question question question question question ."
+            ". hint hint hint hint hint hint ."
+            ". answer answer answer answer answer answer .";
+    }
+    h1 {
+        width: 60%;
+    }
+}

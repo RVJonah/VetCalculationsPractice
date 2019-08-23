@@ -1,52 +1,47 @@
 {% extends "base.html" %}
 
-{% block title %}
-Veterinary Calculations Testing Area
+{% block head %}
+<script src="/static/javascript/domcreate.js"></script>
+<script src="/static/javascript/test.js"></script>
+<link href="/static/css/test.css" rel="stylesheet" type="text/css">
+<title>Veterinary Calculations Testing Area</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/test.css" rel="stylesheet" type="text/css">
-<div id="testpage">
-        <div id="resultdiv"></div>
-        <div class="mtitle" id="tester">
-                Please select a test below<br>
-                Random is comprised of 10 randomly generated questions from all topics
-        </div>
-        <div class="flexcontainer">
-               <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Pills.jpg" class="testimage" onclick="requesttest('Tablet',1)"></p>
-                        <h3 class="centered">Tablets</h3>
-                </div>
-                <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Liquid.jpg" class="testimage" onclick="requesttest('Liquid',1)"></p>
-                        <h3>Oral Liquids</h3>
-                </div>
-                <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Fluids.jpg" class="testimage" onclick="requesttest('Fluids',1)"></p>
-                        <h3>Fluids</h3>
-                </div> 
-        </div>
+<main id="testpage">
+        <h1>Test</h1>
+        <article id="testlist">
+                <p class="subtitle">
+                        Please select a test below. Random is comprised of 10 randomly generated questions from all topics
+                </p>
+                <section id="Tablet">
+                        <h2 >Tablets</h2>
+                        <button>
+                                <img src="/static/images/Pills.jpg"  alt="A handful of tablets">
+                        </button>
+                </section>
+                <section id="Liquid">
+                        <h2>Oral Liquids</h2>
+                        <button><img src="/static/images/Liquid.jpg" alt="Liquid medication in a cup"></button> 
+                </section>
+                <section id="Fluids">
+                        <h2>Fluids</h2>
+                        <button><img src="/static/images/Fluids.jpg" alt="Drip bags"></button>
+                        
+                </section> 
+                <section id="Gasflow">
+                        <h2>Gas Flow</h2>
+                        <button> <img src="/static/images/Anaesthetic.jpg" alt="Anaesthetic machine"></button>
+                </section>
+                <section id="Injectable">
+                        <h2>Injectables</h2>
+                        <button><img src="/static/images/Injectable.jpg" alt="Syringe and bottle"></button>
+                </section>
+                <section id="Hazard">
+                        <h2>Random</h2>
+                        <button><img src="/static/images/Hazard.jpg" alt="Radioactive hazard symbol"></button>
+                </section>
+        </article>
+</main>
 
-        <div class="flexcontainer">
-                <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Anaesthetic.jpg" class="testimage" onclick="requesttest('gasFlow',1)"></p>
-                        <h3>Gas Flow</h3>
-                </div>
-                <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Injectable.jpg" class="testimage" onclick="requesttest('Injectable',1)"></p>
-                        <h3>Injectables</h3>
-                </div>
-                <div class="flexbox3">
-                        <p class="frame"><input type="image" src="/static/images/Hazard.jpg" class="testimage" onclick="requesttest('Hazard',1)"></p>
-                        <h3>Random</h3>
-                </div>
-        </div>
-        <div id="questionNum"></div>
-        <div id="testdiv1"></div>
-        <div id="testdiv2"></div>
-</div>
-
-{% endblock %}
-{% block footer %}
-<script src="/static/javascript/Test.js"></script>
 {% endblock %}

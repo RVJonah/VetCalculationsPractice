@@ -1,0 +1,83 @@
+@import "basecs";
+#ans {
+    grid-area: answer;
+    display:none;
+}
+#comment {
+    width: 90%;
+    line-height: 200%;
+}
+.formula {
+    color: blue;
+    line-height: 200%;
+}
+.finalanswer {
+    color: red;
+}
+#hint {
+    grid-area: hint;
+    display: none;
+}
+input {
+    width: 20%;
+} 
+#introduction {
+    grid-area: lefta;
+    p {
+        text-align: left;
+    }
+}
+#picture {
+    grid-area: lefta;
+    display: none;
+} 
+#patientdetail {
+    grid-area: righta;
+    ul {
+        text-align: left;
+    }
+}
+#question {
+    grid-area: question; 
+    button[class="next"] {
+        float:right;
+    }
+    button[id="newbtn"] {
+        visibility: hidden;
+    }  
+    div p {
+        text-align: left;
+        margin: 0;
+        padding: 0;
+    }
+    label{
+        display:block;
+    }
+}
+section {
+    font-size: 1.5em;
+    padding: 3% 5% 1% 5%;
+    img {
+        border: 2px solid black;
+        max-width: 70%;
+    }
+    p:first-of-type {
+        text-align: left;
+    }
+}
+#teach {
+    grid-area: hint;
+}
+
+@media (min-width: 1000px) {
+    section {
+        border: none;
+        margin: 0;  
+    }
+    #comment {
+        width: 80%;
+    }
+    #picture {
+        display: block;
+    }
+}

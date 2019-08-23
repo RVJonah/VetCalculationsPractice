@@ -7,8 +7,7 @@ YEAR_IN_SECS = 31536000
 
 
 class SSLify(object):
-    """Secures your Flask App."""
-
+    #Secures Flask App.
     def __init__(self, app=None, age=YEAR_IN_SECS, subdomains=False,
                  permanent=False, skips=None):
         self.app = app or current_app
@@ -39,7 +38,7 @@ class SSLify(object):
         return self.app.config['SSLIFY_SKIPS']
 
     def init_app(self, app):
-        """Configures the specified Flask app to enforce SSL."""
+        #Configures the specified Flask app to enforce SSL.
         app.config.setdefault('SSLIFY_AGE', self.defaults['age'])
         app.config.setdefault('SSLIFY_SUBDOMAINS', self.defaults['subdomains'])
         app.config.setdefault('SSLIFY_PERMANENT', self.defaults['permanent'])
@@ -50,7 +49,7 @@ class SSLify(object):
 
     @property
     def hsts_header(self):
-        """Returns the proper HSTS policy."""
+        #Returns the proper HSTS policy.
         hsts_policy = 'max-age={0}'.format(self.hsts_age)
 
         if self.hsts_include_subdomains:
@@ -60,8 +59,6 @@ class SSLify(object):
 
     @property
     def skip(self):
-        """Checks the skip list."""
-        # Should we skip?
         if self.skip_list and isinstance(self.skip_list, list):
             for skip in self.skip_list:
                 if request.path.startswith('/{0}'.format(skip)):
@@ -69,8 +66,7 @@ class SSLify(object):
         return False
 
     def redirect_to_ssl(self):
-        """Redirect incoming requests to HTTPS."""
-        # Should we redirect?
+        # Redirect incoming requests to HTTPS.
         criteria = [
             request.is_secure,
             current_app.debug,
@@ -88,8 +84,7 @@ class SSLify(object):
                 return r
 
     def set_hsts_header(self, response):
-        """Adds HSTS header to each response."""
-        # Should we add STS header?
+        # Adds HSTS header to each response.
         if request.is_secure and not self.skip:
             response.headers.setdefault(
                 'Strict-Transport-Security', self.hsts_header)

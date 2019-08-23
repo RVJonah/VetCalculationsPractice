@@ -1,0 +1,91 @@
+@import "basecs";
+body {
+    background-image: url("../images/account_background.jpg");
+    background-blend-mode: darken;
+}
+#comment {
+    width: 80%;
+    line-height: 150%;
+  }
+fieldset {
+    border-radius: 2em;
+}
+form {
+    font-size: 1.3em;
+    margin: 5% 0 5% 0;
+    padding: 0;
+    display: inline-block;
+    width: 80%;
+    text-align: justify;
+    input {
+      margin: 0.5% 0 0.5% 0;
+      width: 35%;
+      border: 1px solid black;
+    }
+    div {
+        text-align: center;
+    }
+}
+.hazard td {
+    background-color: rgb(255, 255, 102, 0.8);
+    padding-bottom: 5px;
+}
+.kennels td {
+    background-color: $kennel-colour;
+}
+label {
+    display: inline-block;
+    margin: 0.5% auto 1% auto;
+    width: 50%;
+    text-align: right;
+}
+legend {
+    margin-left: 1em;
+}
+.pharmacy td {
+    background-color: $pharmacy-colour;
+}
+section {
+    border-radius: 2em;
+}
+table {
+    margin: 5%;
+    width: 90%;
+    border: 2px solid black;
+    border-collapse: collapse;
+    font-size: 1.3em;
+    caption {
+        font-weight: bold;
+        text-decoration: underline;
+        margin-bottom: 3%;
+    }
+    tr, th {
+        border: 2px solid black;
+        width: 30%;
+    }
+    td {
+        border: inherit;
+        width: 30%;
+    }
+}
+#tableSection {
+    grid-column: 2 / 8;
+    grid-row: 3 / 4;
+}
+.theatre td {
+    background-color:  $theatre-colour;
+}
+.update {
+    grid-column: 2 / 8;
+    grid-row: 4 / 6; 
+}
+@media (min-width: 1000px) {
+    #tableSection {
+        grid-column: 4/ 6;
+        grid-row: 4 / 6;
+    }
+    .update {
+        grid-column: 4 / 6;
+        grid-row: 6 / 8; 
+    }
+  }

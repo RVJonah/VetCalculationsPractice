@@ -1,265 +1,142 @@
-function requesttest(TType, repeat) {
-    qtype = {
-        'qtype': "question",
-        'TType': TType
+'use strict';
+var Test = (function () {
+    var testObj = {
+        qNum: 0,
+        questions: {
+        },
+        answers: {},
+        testArea: null,
+        testList: null,
+        createTestArea: function () {
+            var testarea = domCreate.element("article", {'id':"testarea"});
+            domCreate.section("testinfo1", "Patient Details", testarea);
+            domCreate.section("testinfo2", "Treatment Details", testarea);
+            var question = domCreate.section("question", "Question", testarea);
+            domCreate.appendCreate("p", {'id': "info"}, question);
+            domCreate.appendCreate("p", {'id': "quest"}, question);
+            domCreate.appendCreate("p", {'id': "additional"}, question);
+            domCreate.button({'id': "prevbtn", 'onclick': "Test.questionSelect(-1)"}, "Previous", question);
+            domCreate.button({'id': "nextbtn", 'onclick': "Test.questionSelect(1)"}, "Next", question);
+            domCreate.button({'id': "subbtn", 'onclick': "Test.storeAnswer()"}, "Submit", question);
+            domCreate.button({'id': "completebtn", 'onclick': "Test.sendAnswers(Test.answers)"}, "Complete", question);
+            $("Main").append(testarea);
+            this.testArea = testarea;
+        },
+        deployQuestion: function () {
+            $("#testinfo1 ul").remove();
+            $("#testinfo2 ul").remove();
+            $("#question p").empty()
+            $("h1").html(`Question ${this.qNum + 1}`);
+            domCreate.list({'id': "pdetail"}, this.questions[this.qNum].box1, $("#testinfo1"));
+            domCreate.list({'id': "treatment"}, this.questions[this.qNum].box2, $("#testinfo2"));
+            $("#info").text(this.questions[this.qNum].question.intro);
+            $("#quest").text(this.questions[this.qNum].question.question);
+            $("#additional").text(this.questions[this.qNum].question.otherinfo);
+
+            if (this.questions[this.qNum].questType === "gasFlow") {
+                var maxUnitDiv = domCreate.answerbox("max", "Max Flow Rate: ", "ANS1", "text", this.questions[this.qNum].question.units);
+                var minUnitDiv = domCreate.answerbox("ANS2", "Min Flow Rate: ", "min", "text", this.questions[this.qNum].question.units);
+                $("#quest").append(maxUnitDiv);
+                $("#quest").append(minUnitDiv);
+            } else {
+                var answerDiv = domCreate.answerbox("max", "Answer: ", "ANS", "text", this.questions[this.qNum].question.units);
+                $("#quest").append(answerDiv);
+            }
+        },
+        displayResults: function (data) {
+            $('h1').text("Results");
+            $('main').append(data);
+            $('#repeatbtn').attr('onclick', `Test.requestTest('${Test.questions[10]}', 2)`);
+            $('#returnbtn').attr('onclick', 'Test.returner()');
+        },
+        questionSelect: function (move) {
+            if (move === 1) {
+                this.qNum++;
+            }
+            if (move === -1) {
+                this.qNum--;
+            }
+            if (this.qNum === 0) {
+                $("#prevbtn").prop("disabled", "true");
+            }
+            if (this.qNum === 9) {
+                $("#nextbtn").prop("disabled", "true");
+                $("#completebtn").removeAttr("disabled");
+            }
+            if (this.qNum > 0) {
+                $("#prevbtn").removeAttr("disabled");
+            }
+            if (this.qNum < 9) {
+                $("#nextbtn").removeAttr("disabled");
+                $("#completebtn").prop("disabled", "true");
+            }
+            this.deployQuestion();
+        },
+        requestTest: function (event, repeat) {
+            var qtype = {};
+            if (repeat === 1) {
+                var testType =(event.parentElement.id);
+                qtype.TType = testType;
+            } else {
+                qtype.TType = event
+            }
+            if (repeat === 1) {
+                this.testList= $("#testlist").detach();
+                if (this.testArea === null) {
+                    this.createTestArea();
+                } else {
+                    $('main').append(this.testArea);
+                }
+            }
+            if (repeat === 2) {
+                $('main').append(this.testArea);
+                $('#results').remove();
+            }
+            $.post("/test", qtype, function(data) {
+                Test.qNum = 0;
+                Test.questions = data;
+                for (var i = 0; i < 10; i++) {
+                    Test.answers[i] = "";
+                } 
+                Test.answers.TType = data[10];
+                Test.questionSelect(0);
+            });
+        },
+        returner: function() {
+            $('h1').text("Test");
+            $('#results').remove();
+            $('main').append(this.testList);
+        },
+        sendAnswers: function (answers) {
+            if (confirm ("Are you sure you wish to submit your answers?")) {
+                $.post("/results", answers, function (data) {
+                    Test.qNum = 0;
+                    Test.displayResults(data);
+                    $('h1').text("Results");
+                    $('#testarea').detach();
+                });
+            }
+        },
+        storeAnswer : function () {
+            if (this.questions[this.qNum]['questType'] === "gasFlow") {
+                this.answers[this.qNum] = $('#ANS1').val();
+                this.answers[`${this.qNum}min`] = $('#ANS2').val();
+
+            } else {
+                this.answers[this.qNum] = $('#ANS').val();
+            }
+            if (this.qNum === 9) {
+                this.questionSelect(0);
+            } else {
+                this.questionSelect(1);
+            }
+        }
     };
-    $.post("/test", qtype, function(data) {
-        if (repeat == 2) {
-            document.getElementById("repeatbtn").style.display = "none"
-            document.getElementById("returnbtn").style.display = "none"
-        }
-        document.getElementById("resultdiv").style.display = "none"
-        if (repeat == 1) {
-            document.getElementsByClassName("flexcontainer")[0].style.display = "none"
-            document.getElementsByClassName("flexcontainer")[1].style.display = "none"
-        }
-        runtest(data)
-    })
-}
+    return testObj;
+}());
 
-
-//global question number and questions variable
-var qNum = 0
-var questions = {}
-
-// creates object for submitted answers
-var answers = {
-    'qtype': 'answers'
-
-}
-
-function runtest(data) {
-    $("#tester").remove()
-    $("#startbtn").remove()
-    document.getElementById("testdiv1").style.display = "flex"
-    document.getElementById("testdiv1").style.flex = "row"
-    questions = data
-    answers['TType'] = data[10]
-    let questdiv1 = document.createElement('div')
-    questdiv1.setAttribute('id', 'questdiv1')
-    questdiv1.setAttribute('class', "quest")
-    let questdiv2 = document.createElement('div')
-    questdiv2.setAttribute('id', 'questdiv2')
-    questdiv2.setAttribute('class', "quest")
-    let answer = document.createElement('div')
-    answer.setAttribute('id', 'answerdiv')
-    let prev = document.createElement('BUTTON')
-    prev.setAttribute('id', "prevbtn")
-    prev.setAttribute('class', "smallbtn")
-    prev.setAttribute("disabled", "")
-    prev.setAttribute('onclick', "qmove(-1,questions)")
-    prev.innerHTML = "Previous"
-    let next = document.createElement('BUTTON')
-    next.setAttribute('id', "nextbtn")
-    next.setAttribute('class', "smallbtn")
-    next.setAttribute('onclick', "qmove(1,questions)")
-    next.innerHTML = "Next"
-    let sub = document.createElement('BUTTON')
-    sub.setAttribute('id', "subbtn")
-    sub.setAttribute('class', "smallbtn")
-    sub.setAttribute('onclick', "store(1, questions)")
-    sub.innerHTML = "Submit"
-    let complete = document.createElement('BUTTON')
-    complete.setAttribute('id', "completebtn")
-    complete.setAttribute('class', "smallbtn")
-    complete.setAttribute("disabled", "")
-    complete.setAttribute("onclick", "sendAnswers(answers)")
-    complete.innerHTML = "Complete"
-    let test1 = document.getElementById('testdiv1')
-    let test2 = document.getElementById('testdiv2')
-    test1.appendChild(questdiv1)
-    test1.appendChild(questdiv2)
-    test2.appendChild(answer)
-    test2.appendChild(prev)
-    test2.appendChild(next)
-    test2.appendChild(sub)
-    test2.appendChild(complete)
-
-    qmove(0, questions)
-}
-
-// alters currently displayed question move arg 1 = move on, -1 = move back
-function qmove(move, questions) {
-    // increments or decrements question number
-    if (move === 1) {
-        qNum++
-    }
-    if (move === -1) {
-        qNum--
-    }
-
-    // activates prev/next/complete buttons to prevent qNum going out of range
-    if (qNum === 0) {
-        document.getElementById("prevbtn").setAttribute("disabled", "")
-    }
-    if (qNum === 9) {
-        document.getElementById("nextbtn").disabled = true
-        document.getElementById("completebtn").disabled = false
-    }
-    if (qNum > 0 && document.getElementById("prevbtn").disabled === true) {
-        document.getElementById("prevbtn").disabled = false
-    }
-    if (qNum < 9 && document.getElementById("nextbtn").disabled === true) {
-        document.getElementById("nextbtn").disabled = false
-    }
-    // adds question number to top of screen
-    document.getElementById('questionNum').innerHTML = `<h3>Question ${qNum + 1}</h3>`
-
-    // generates the answer area
-    answerboxgenerator(questions)
-
-    if (questions[qNum]['questType'] === "Tablet" || questions[qNum]['questType'] === "Liquid") {
-        document.getElementById('questdiv1').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
-            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
-            <li>Weight: ${questions[qNum]["bodyweight"]}kg</li> \n\
-            <li>Presenting Complaint: ${questions[qNum]["symptom"]}</li></ul>`
-        document.getElementById('questdiv2').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
-            <ul id="ul"><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li>\n\
-            <li>Daily Doses: ${questions[qNum]["wordDaily"]}</li>  \n\
-            <li>Length Of Treatment: ${questions[qNum]["courseLength"]} days</li>`
-    }
-    let medstrength = document.createElement('li')
-    if (questions[qNum]['questType'] === "Tablet") {
-        medstrength.innerHTML = `Tablet Strength Available: ${questions[qNum]["medStrength"]}mg/tablet`
-        document.getElementById("ul").appendChild(medstrength)
-
-    }
-    if (questions[qNum]['questType'] === "Liquid") {
-        if (questions[qNum]['lType'] === 1) {
-            medstrength.innerHTML =
-                `Liquid Concentration: ${questions[qNum]['medStrength']}mg/ml`
-            document.getElementById("ul").appendChild(medstrength)
-        }
-        if (questions[qNum]['lType'] === 2) {
-            medstrength.innerHTML =
-                `Liquid Concentration: ${questions[qNum]['percMedStrength']}% solution`
-            document.getElementById("ul").appendChild(medstrength)
-        }
-
-    }
-    if (questions[qNum]['questType'] === "gasFlow") {
-        document.getElementById('questdiv1').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
-            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
-            <li>Weight: ${questions[qNum]["bodyweight"]}kg</li> \n\
-            <li>Respiration Rate: ${questions[qNum]["respirationRate"]} breaths per minute</li></ul> \n\
-        `
-        document.getElementById('questdiv2').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Circuit Details</div>\n\
-            <ul><li>Circuit Type: ${questions[qNum]["circuit"]} circuit</li> \n\
-            <li>Circuit Factor: ${questions[qNum]["minFactor"]}-${questions[qNum]["maxFactor"]} </li></ul>  \n\
-        `
-    }
-    if (questions[qNum]['questType'] === "Injectable") {
-        document.getElementById('questdiv1').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
-            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
-            <li>Weight: ${questions[qNum]["bodyweight"]}kg</li></ul>`
-        if (questions[qNum]['lType'] === 1) {
-            document.getElementById('questdiv2').innerHTML =
-                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
-                <ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
-                <li>Injectable Concentration: ${questions[qNum]["medStrength"]}mg/ml solution</li></ul>`
-        } else {
-            document.getElementById('questdiv2').innerHTML =
-                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
-                <ul><li>Max Dose Rate: ${questions[qNum]["dose"]}mg/kg</li> \n\
-                <li>Injectable Concentration: ${questions[qNum]["percMedStrength"]}% solution</li></ul>`
-        }
-    }
-    if (questions[qNum]['questType'] === "Fluids") {
-        document.getElementById('questdiv1').innerHTML =
-            `<div style="padding-left: 10%; text-decoration: underline;">Patient Details</div>\n\
-            <ul><li>Species: ${questions[qNum]["species"]}</li>\n\
-            <li>Weight: ${questions[qNum]["bodyweight"]}kg</li></ul>`
-        if (questions[qNum]["dehydration"] === 0) {
-            document.getElementById('questdiv2').innerHTML =
-                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
-                <ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li></ul>`
-        } else {
-            document.getElementById('questdiv2').innerHTML =
-                `<div style="padding-left: 10%; text-decoration: underline;">Treatment Details</div>\n\
-                <ul id="ul"><li>Maintenance Fluid Rate: ${questions[qNum]["dailyFluids"]}ml/kg/day</li>  \n\
-                <li>Pecentage Dehydration: ${questions[qNum]["dehydration"]} % </li> \n\
-                <li>Ongoing Fluid Loss Per Day: ${questions[qNum]["onGoingLoss"]}ml/day </li><ul>`
-        }
-        if (questions[qNum]['mlVsSec'] === 1) {
-            let dropsPer = document.createElement('li')
-            dropsPer.innerHTML = `Drops Per ml: ${questions[qNum]["dropsPerMl"]} drops`
-            document.getElementById('ul').appendChild(dropsPer)
-        }
-
-    }
-
-}
-
-
-
-function store(move, questions) {
-    if (questions[qNum]['questType'] === "gasFlow") {
-        answers[qNum] = document.getElementById('ANS1').value
-        answers[`${qNum}min`] = document.getElementById('ANS2').value
-
-    } else {
-        answers[qNum] = document.getElementById('ANS').value
-    }
-
-    if (qNum === 9) {
-        qmove(0, questions)
-    } else {
-        //moves to next question
-        qmove(1, questions)
-    }
-}
-
-function answerboxgenerator(questions) {
-
-    // assigns answerdiv and assigns first parts of question
-    let answerdiv = document.getElementById('answerdiv')
-    answerdiv.innerHTML = questions[qNum]['question']['part1'] + "<br>" + questions[qNum]['question']['part2']
-
-    if (questions[qNum]['questType'] === "gasFlow") {
-        // if gasflow calculation 2 answer boxes created and given id
-        let answerbox1 = document.createElement('input')
-        answerbox1.setAttribute('id', "ANS1")
-        answerbox1.setAttribute('class', "answerbox")
-        answerbox1.setAttribute('autocomplete', "off")
-
-        let answerbox2 = document.createElement('input')
-        answerbox2.setAttribute('id', "ANS2")
-        answerbox2.setAttribute('class', "answerbox")
-        answerbox2.setAttribute('autocomplete', "off")
-
-        answerdiv.appendChild(answerbox1)
-        answerdiv.innerHTML = answerdiv.innerHTML + questions[qNum]['question']['part4'] +
-            "<br>" + questions[qNum]['question']['part3']
-        answerdiv.appendChild(answerbox2)
-        answerdiv.innerHTML = answerdiv.innerHTML + questions[qNum]['question']['part4'] + "<br>" +
-            questions[qNum]['question']['part5']
-    } else {
-        // creates single answer box
-        let answerbox = document.createElement('input')
-        answerbox.setAttribute('id', "ANS")
-        answerbox.setAttribute('class', "answerbox")
-        answerbox.setAttribute('autocomplete', "off")
-
-        // adds remainder of question and answerbox to div
-        answerdiv.innerHTML = questions[qNum]['question']['part1'] + "<br>" + questions[qNum]['question']['part2']
-        answerdiv.appendChild(answerbox)
-        answerdiv.innerHTML = answerdiv.innerHTML + questions[qNum]['question']['part4'] +
-            "<br>" + questions[qNum]['question']['part3']
-    }
-}
-
-function sendAnswers(answers) {
-    if (confirm("Are you sure you wish to submit your answers?")) {
-        $.post("/test", answers, function(data) {
-            qNum = 0
-            document.getElementById("testpage").innerHTML = data
-            document.getElementById("resultdiv").style.display = ""
-            document.getElementById("testdiv1").style.display = "none"
-        })
-    } else return 0
-}
+$(document).ready(function () {
+    $.each($('button'), function (index, button) {
+        button.setAttribute("onclick", "Test.requestTest(this, 1)");
+    });
+});

@@ -1,0 +1,34 @@
+@import "basecs";
+.option1 {
+    grid-area: lefta;
+} 
+.option2 {
+    grid-area: righta;
+}
+section {
+    ul {
+        padding-inline-start: 0px;
+    }
+    ul li{
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        width: 30%;
+        line-height: 200%;
+        background-color: $nav-colour;
+        a{
+            display: block;
+            width: 100%;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            background-color: black;
+        }
+    }
+    img {
+        border: 2px solid black;
+        width: 50%;
+    }
+}

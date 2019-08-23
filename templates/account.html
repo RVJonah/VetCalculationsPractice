@@ -1,62 +1,73 @@
 {% extends "base.html" %}
 
-{% block title %}
-My account
+{% block head %}
+<link href="/static/css/account.css" rel="stylesheet" type="text/css">
+<script src="/static/javascript/helper.js"></script>
+<script src="/static/javascript/update.js"></script>
+<title>My account</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/account.css" rel="stylesheet" type="text/css">
 
-<p class="mtitle">Current results for: {{ student[0]['username']}}</p>
 
-<p><table class="resultTable">
-    <tr>
-    <th>Test Type</th>
-    <th>Best Score</th>
-    <th>Number of Tests Taken</th>
-    </tr>
-    <tr>
-        <td class="pharmacy">Tablet Calculations</td>
-        <td class="pharmacy">{{ bestResult['Tablet'] }}</td>
-        <td class="pharmacy">{{ attempts['Tablet'] }} {% if attempts['Tablet'] == 1 %}test{% else %}tests{% endif %}</td>
-    </tr>
-    <tr>
-        <td class="pharmacy">Liquid Calculations</td>
-        <td class="pharmacy">{{ bestResult['Liquid'] }}</td>
-        <td class="pharmacy">{{ attempts['Liquid'] }} {% if attempts['Liquid'] == 1 %}test{% else %}tests{% endif %}</td>
-    </tr>
-    <tr>
-        <td class="kennels">Fluid Therapy Calculations</td>
-        <td class="kennels">{{ bestResult['Fluids'] }}</td>
-        <td class="kennels">{{ attempts['Fluids'] }} {% if attempts['Fluids'] == 1 %}test{% else %}tests{% endif %}</td>
-    </tr>
-    <tr>
-        <td class="theatre">Gas Flow Calculations</td>
-        <td class="theatre">{{ bestResult['gasFlow'] }}</td>
-        <td class="theatre">{{ attempts['gasFlow'] }} {% if attempts['gasFlow'] == 1 %}test{% else %}tests{% endif %}</td>
-    </tr>
-    <tr>
-        <td class="theatre">Injectable Calculations</td>
-        <td class="theatre">{{ bestResult['Injectable'] }}</td>
-        <td class="theatre">{{ attempts['Injectable'] }} {% if attempts['Injectable'] == 1%}test{% else %}tests{% endif %}</td>
-    </tr>
-    <tr>
-        <td class="hazard">Random Calculations</td>
-        <td class="hazard">{{ bestResult['Hazard'] }}</td>
-        <td class="hazard">{{ attempts['Hazard'] }} {% if attempts['Hazard'] == 1%}test{% else %}tests{% endif %}</td>
-    </tr>
-</table></p>
-<div class="formdiv">
-    <div class="centered atitle">
-        Please use the form below to update your details
-    </div>
-    <form class="sDetails" id="updateform">
-        <label>Current Email Address: </label> <span id="storedEmail">{{student[0]['email']}}</span><br>
-        <label>New Email Address: </label> <input type="email" class="updatebox" name="updemail" autocomplete="off"><br>
-        <label>New Password: </label> <input type="password" class="updatebox" name="updpass" autocomplete="off"><br>
-        <label>Confirm New Password: </label> <input type="password" class="updatebox" name="updconpass" autocomplete="off"><br>
-    </form>
-    <p class="centered"><input type="button" class="updatebtn" value="Submit Changes" onclick="update()"><br></p>
-</div>
-<div id="comment" class="comment sDetails"></div>
+<main>
+    <h1>{{ student[0]['username']}}</h1>
+    <section id="tableSection">
+        <table>
+            <caption>Current results</caption>
+            <thead>
+                <tr>
+                    <th>Test Type</th>
+                    <th>Best Score</th>
+                    <th>Number of Tests Taken</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="pharmacy">
+                    <td >Tablet Calculations</td>
+                    <td >{{ bestResult['Tablet'] }}</td>
+                    <td >{{ attempts['Tablet'] }} {% if attempts['Tablet'] == 1 %}test{% else %}tests{% endif %}</td>
+                </tr>
+                <tr class="pharmacy">
+                    <td >Liquid Calculations</td>
+                    <td >{{ bestResult['Liquid'] }}</td>
+                    <td >{{ attempts['Liquid'] }} {% if attempts['Liquid'] == 1 %}test{% else %}tests{% endif %}</td>
+                </tr>
+                <tr class="kennels">
+                    <td >Fluid Therapy Calculations</td>
+                    <td >{{ bestResult['Fluids'] }}</td>
+                    <td >{{ attempts['Fluids'] }} {% if attempts['Fluids'] == 1 %}test{% else %}tests{% endif %}</td>
+                </tr>
+                <tr class="theatre">
+                    <td>Gas Flow Calculations</td>
+                    <td>{{ bestResult['gasFlow'] }}</td>
+                    <td>{{ attempts['gasFlow'] }} {% if attempts['gasFlow'] == 1 %}test{% else %}tests{% endif %}</td>
+                </tr>
+                <tr class="theatre">
+                    <td>Injectable Calculations</td>
+                    <td>{{ bestResult['Injectable'] }}</td>
+                    <td>{{ attempts['Injectable'] }} {% if attempts['Injectable'] == 1%}test{% else %}tests{% endif %}</td>
+                </tr>
+                <tr class="hazard">
+                    <td>Random Calculations</td>
+                    <td>{{ bestResult['Hazard'] }}</td>
+                    <td>{{ attempts['Hazard'] }} {% if attempts['Hazard'] == 1%}test{% else %}tests{% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="update">
+        <form id="updateform" action="none">
+            <fieldset>
+                <legend>Update your details</legend>
+                <label for="updemail">New Email Address: </label><input type="email" name="updemail" id="updemail" placeholder={{student[0]["email"]}}>
+                <label for="updpass">New Password: </label><input type="password" name="updpass" id="updpass" >
+                <label for="updconpass">Confirm New Password: </label><input type="password" name="updconpass" id="updconpass">
+                <div><button type="submit" id="updatebtn">Update Personal Details</button></div>
+            </fieldset>
+        </form>
+        
+        <p id="comment"></p>
+    </section>
+    
 {% endblock %}

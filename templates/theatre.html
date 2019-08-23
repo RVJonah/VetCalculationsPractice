@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}
-Veterinary Calculations Theatre
+{% block head %}
+<link href="/static/css/theatre.css" rel="stylesheet" type="text/css">
+<link href="/static/css/rooms.css" rel="stylesheet" type="text/css">
+<title>Veterinary Calculations Theatre</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/theatre.css" rel="stylesheet" type="text/css">
-<div class="flexcontainer">
-<div class="flexbox2">
-    <p class="frame">
-        <img src="/static/images/Injectable.jpg" class="testimage">
-    </p>
-    <h3 class="centered">Injectable Medicine Calculations</h3>
-    <ul class="arealink">
-            <li><a class="teachme" href="/injectioncalc?q=teach">Teach Me</a></li>
-            <li><a class="quizme" href="/injectioncalc?q=quiz">Quiz Me</a></li>
-            <li><a class="testme" href="/test">Test Me</a></li>
-        </ul>
-    </div>
-<div class="flexbox2">
-    <p class="frame">
-        <img src="/static/images/Anaesthetic.jpg" class="testimage">
-    </p>
-    <h3 class="centered">Anaesthetic Gas Flow Calculations</h3>
-    <ul class="arealink">
-            <li><a class="teachme" href="/gascalc?q=teach">Teach Me</a></li>
-            <li><a class="quizme" href="/gascalc?q=quiz">Quiz Me</a></li>
-            <li><a class="testme" href="/test">Test Me</a></li>
-        </ul>
-    </div>
-</div>
+<main>
+    <h1>Theatre</h1>
+    <article>
+        <section class="option1">
+            <h2 class="centered">Injectable Medicine Calculations</h2>
+            <img src="/static/images/Injectable.jpg" alt="Syringe and bottle">
+            <ul>
+                <li><a class="teachme" href="/injectioncalc/teach">Teach Me</a></li>
+                <li><a class="quizme" href="/injectioncalc/quiz">Quiz Me</a></li>
+                <li><a class="testme" href="/test">Test Me</a></li>
+            </ul>
+        </section>
+        <section class="option2">
+            <h2>Anaesthetic Gas Flow Calculations</h2>
+            <img src="/static/images/Anaesthetic.jpg" alt="Anaesthetic machine">
+            <ul>
+                <li><a class="teachme" href="/gascalc?q=teach">Teach Me</a></li>
+                <li><a class="quizme" href="/gascalc?q=quiz">Quiz Me</a></li>
+                <li><a class="testme" href="/test">Test Me</a></li>
+            </ul>
+        </section>
+    </article>
+</main>
 {% endblock %}

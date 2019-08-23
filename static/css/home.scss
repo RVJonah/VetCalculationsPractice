@@ -1,0 +1,18 @@
+@import "basecs";
+body {
+    background-color: rgb(1, 55, 82);
+}
+h1 {
+    width: 80%;
+}
+main {
+    p {
+    font-size: 2em;
+    color: white;
+    }
+    img {
+        width: 100%;
+        grid-column: 4 / 6;
+        grid-row: 5 / 6;
+    }
+}

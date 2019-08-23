@@ -1,0 +1,142 @@
+@import "basecs";
+body {
+    background-image: url("../images/test_background.jpg");
+}
+#testlist button {
+    margin: 0 0 3% 0;
+    padding: 0;
+    width: 60%;
+    border: none;
+    background-color: rgb(255, 255, 255, 0.0);
+    img {
+        margin: 0;
+        padding: 0;
+        width:100%;
+    }
+}
+#question {
+    grid-area: hint;
+    padding: 1em;
+    height: 35em;
+    button {
+        width: 25%;
+        position: fixed;
+        bottom: 1em;
+    }
+    button:first-of-type{
+        left: 0;
+    }
+    button:last-of-type{
+        right: 0;
+    }
+    button:nth-of-type(2){
+        left: 25%;
+    }button:nth-of-type(3){
+        left: 50%;
+    }
+    p {
+        font-size: 1.25em;
+        height: 8em;
+        text-align: left;
+    }
+    p:last-of-type {
+        height: 4em;
+    }
+}
+.subtitle {
+    font-size: 1.3em;
+}
+#testinfo1 {
+    grid-area: lefta;
+    padding: 0;
+    height: 12em;
+    font-size: 1.2em;
+}
+#testinfo2 {
+    grid-area: righta;
+    padding: 0;
+    height: 12em;
+    font-size: 1.2em;
+}
+#Tablet{
+    grid-column: 3 / 7;
+    grid-row: 4 / 5;   
+}
+#Liquid{
+    grid-column: 3 / 7;
+    grid-row: 5 / 6;   
+}
+#Fluids{
+    grid-column: 3 / 7;
+    grid-row: 6 / 7;  
+}
+#Gasflow{
+    grid-column: 3 / 7;
+    grid-row: 7 / 8;  
+}
+#Injectable{
+    grid-column: 3 / 7;
+    grid-row: 8 / 9;   
+}
+#Hazard{
+    grid-column: 3 / 7;
+    grid-row: 9 / 10;  
+}
+#resultsSection {
+    grid-column: 2 / 8;
+    grid-row: 4 / 5;
+    font-size: 1.5em;
+    button {
+        width: 15%;
+    }
+}
+section {
+    ul {
+        text-align: left;
+        font-size: 1.2em;
+    }
+}
+@media (min-width: 1000px) {
+    #Tablet{
+        grid-column: 2 / 4;
+        grid-row: 4 / 5;   
+    }
+    #Liquid{
+        grid-column: 4 / 6;
+        grid-row: 4 / 5;   
+    }
+    #Fluids{
+        grid-column: 6 / 8;
+        grid-row: 4 / 5;  
+    }
+    #Gasflow{
+        grid-column: 2 / 4;
+        grid-row: 5 / 6;  
+    }
+    #Injectable{
+        grid-column: 4 / 6;
+        grid-row: 5 / 6;   
+    }
+    #Hazard{
+        grid-column: 6 / 8;
+        grid-row: 5 / 6;  
+    }
+    #resultsSection button {
+        width: 30%;
+    }
+    #question {
+        height: 18em;
+        button {
+            width: 15%;
+            margin-left: 1%;
+            position: initial;
+        }
+        p {
+            margin: 0;
+            height: 2.4em;
+        }
+        p:last-of-type {
+            height: 2em;
+        }
+    }
+}

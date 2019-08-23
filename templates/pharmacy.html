@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}
-Vet Calculation Pharmacy
+{% block head %}
+<link href="/static/css/rooms.css" rel="stylesheet" type="text/css">
+<link href="/static/css/pharmacy.css" rel="stylesheet" type="text/css">
+<title>Vet Calculation Pharmacy</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/pharmacy.css" rel="stylesheet" type="text/css">
-<div class="flexcontainer">
-<div class="flexbox2">
-    <p class="frame">
-        <img src="/static/images/Pills.jpg" class="testimage">
-    </p>
-    <h3 class="centered">Tablet Medicine Calculations</h3>
-    <ul class="arealink">
-            <li><a class="teachme" href="/tabletcalc?q=teach">Teach Me</a></li>
-            <li><a class="quizme" href="/tabletcalc?q=quiz">Quiz Me</a></li>
-            <li><a class="testme" href="/test">Test Me</a></li>
-        </ul>
-    </div>
-<div class="flexbox2">
-    <p class="frame">
-        <img src="/static/images/Liquid.jpg" class="testimage">
-    </p>
-    <h3 class="centered">Oral Liquid Medicine Calculations</h3>
-    <ul class="arealink">
-        <li><a class="teachme" href="/liquidcalc?q=teach">Teach Me</a></li>
-        <li><a class="quizme" href="/liquidcalc?q=quiz">Quiz Me</a></li>
-        <li><a class="testme" href="/test">Test Me</a></li>
-    </ul>
-    </div>
-</div>
+<main>
+<h1>Pharmacy</h1>
+    <article>
+        <section class="option1">
+            <h2>Tablet Medicine Calculations</h2>
+            <img src="/static/images/Pills.jpg" alt="A handful of tablets">
+            <ul>
+                    <li><a class="teachme" href="/tabletcalc/teach">Teach Me</a></li>
+                    <li><a class="quizme" href="/tabletcalc/quiz">Quiz Me</a></li>
+                    <li><a class="testme" href="/test">Test Me</a></li>
+            </ul>
+        </section>
+        <section class="option2">
+            <h2>Oral Liquid Medicine Calculations</h2>
+            <img src="/static/images/Liquid.jpg" alt="Liquid medication in a cup">
+            <ul>
+                <li><a class="teachme" href="/liquidcalc?q=teach">Teach Me</a></li>
+                <li><a class="quizme" href="/liquidcalc?q=quiz">Quiz Me</a></li>
+                <li><a class="testme" href="/test">Test Me</a></li>
+            </ul>
+        </section>
+    </article>
+</main>
 {% endblock %}

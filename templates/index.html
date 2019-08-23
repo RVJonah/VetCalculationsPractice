@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}
-Vet Calculations Practice
+{% block head %}
+<link href="/static/css/home.css" rel="stylesheet" type="text/css">
+<title>Vet Calculations Practice</title>
 {% endblock %}
 
 {% block main %}
-<link href="/static/css/home.css" rel="stylesheet" type="text/css">
-<div class="titlediv centered">
-<h1>Welcome to the Veterinary Calculations Practice!</h1>
-</div>
-<p class="mtitle" >Here you will find a hospital which will teach all about the calculations that will be needed<br>
-through your career whether you are a vet, nurse or vet tech</p>
+<main>
+    <h1>Welcome to the Veterinary Calculations Practice!</h1>
+    <p class="subtitle">
+        Here you will find a hospital which will teach all about the calculations that will be needed
+        through your career whether you are a vet, nurse or vet tech
+    </p>
+    <img src="/static/images/logo.png">
+</main>
 {% endblock %}

@@ -97,15 +97,15 @@ class Fluids(Cat, Dog, Rabbit):
         # generates question text
         if self.dehydration > 0:
             self.question = {
-                'part1': "The above patient has been admitted for fluid therapy. The decision has been made to fully rehydrate the patient over the next 24 hours.",
-                'part2': "What is the required fluid rate to ensure this is the case? ",
-                'part3': f"(Give your answer rounded down to the nearest {self.unitArray[self.mlVsSec + 2]})",
-                'part4': self.unitArray[self.mlVsSec]}
+                'intro': "A patient has been admitted for fluid therapy. The decision has been made to fully rehydrate the patient over the next 24 hours.",
+                'question': "What is the required fluid rate to ensure this is the case? ",
+                'otherinfo': f"(Give your answer rounded down to the nearest {self.unitArray[self.mlVsSec + 2]})",
+                'units': self.unitArray[self.mlVsSec]}
         else:
             self.question = {
-                'part1': "Using the details listed calculate the daily maintenance fluid rate for the patient above",
-                'part3': f"(Give your answer rounded down to the nearest {self.unitArray[self.mlVsSec + 2]})",
-                'part4': self.unitArray[self.mlVsSec]}
+                'question': "Using the details listed calculate the daily maintenance fluid rate for the patient above",
+                'otherinfo': f"(Give your answer rounded down to the nearest {self.unitArray[self.mlVsSec + 2]})",
+                'units': self.unitArray[self.mlVsSec]}
 
 #-------------------FLUIDS CALCULATOR CLASS END--------------------------------#
 
@@ -137,10 +137,10 @@ class Gasflow(Cat, Dog):
 
         # generates question
         self.question = {
-            'part1': "Calculate the fresh gas flow rate requirement for the above patient giving both the maximum and minimum flow rate",
-            'part2': "Maximum Flow Rate:",
-            'part3': "Minimum Flow Rate: ",
-            'part4': "ml/minute", 'part5': "(Give your answer to the nearest ml rounded down)"}
+            'intro': "Calculate the fresh gas flow rate requirement for the patient giving both the maximum and minimum flow rate",
+            'maxgas': "Max. Flow Rate:",
+            'mingas': "Min. Flow Rate: ",
+            'units': "ml/minute", 'otherinfo': "(Give your answer to the nearest ml rounded down)"}
 
 #-------------------ANASESTHETIC GAS CLASS START--------------------------------#
 
@@ -182,10 +182,10 @@ class Tablet(Cat,Dog):
         self.ANS = math.ceil(self.unroundedANS)
 
         self.question = {
-            'part1': "The above patient is being sent home with medication in tablet form. You have been asked to determine the number of whole tablets that are required for the complete treatment course.",
-            'part2': "How many tablets does this patient require? ",
-            'part3': "(The tablets can be broken into quarters and the dose rate must not be exceeded with any single dose)",
-            'part4': "tablets"
+            'intro': "A patient is being sent home with medication in tablet form. You have been asked to determine the number of whole tablets that are required for the complete treatment course.",
+            'question': "How many tablets does this patient require? ",
+            'otherinfo': "(The tablets can be broken into quarters and the dose rate must not be exceeded with any single dose)",
+            'units': "tablets"
         }
 
 #-----------------END OF TABLET CALC----------------------------------#
@@ -236,10 +236,10 @@ class Liquid(Cat, Dog):
             self.percMedStrength = self.medStrength * 10
 
         self.question = {
-            'part1': "The above patient is being sent home with medication in liquid form. You have been asked to determine the volume of liquid required to complete the full course of treatment.",
-            'part2': "What volume of liquid is required to complete the full treatment course?",
-            'part3': "(The total volume of liquid should be calculated to the nearest 1ml and the dose rate must not be exceeded with any single dose)",
-            'part4': "ml",
+            'intro': "A patient is being sent home with medication in liquid form. You have been asked to determine the volume of liquid required to complete the full course of treatment.",
+            'question': "What volume of liquid is required to complete the full treatment course?",
+            'otherinfo': "(The total volume of liquid should be calculated to the nearest 1ml and the dose rate must not be exceeded with any single dose)",
+            'units': "ml",
         }
 
 
@@ -280,173 +280,151 @@ class Injectable(Cat, Dog):
             self.percMedStrength = self.medStrength / 10
 
         self.question = {
-            'part1': "While the above patient is under anaesthesia you have been asked to administer an injection of pain medication.",
-            'part2': "Using the information above what volume of solution should be drawn up for administration? ",
-            'part3': "(Give your answer rounded down to the nearest 0.1ml)",
-            'part4': "ml"
+            'intro': "While a patient is under anaesthesia you have been asked to administer an injection of pain medication.",
+            'question': "Using the information given what volume of solution should be drawn up for administration? ",
+            'otherinfo': "(Give your answer rounded down to the nearest 0.1ml)",
+            'units': "ml"
         }
 
 
 #---------------END OF INJECTABLE CLASS-----------------#
 
 #-------------- TEST GENERATING ALGORITHM-------#
+def tabletTestQuestion(data, i):
+    question = Tablet()
+    data.update({i: {
+        'questType': 'Tablet',
+        'ANS': question.ANS,
+        'box1' : {
+            'Weight': f"{question.bodyweight}kg",
+            'Species': question.species,
+            'Presenting Complaint': question.symptom
+            },
+        'box2' : {
+            'Max Dose Rate': f"{question.dose}mg/kg",
+            'Course Length': f"{question.courseLength} days",
+            'Tablet Strength Available': f"{question.medStrength}mg/tablet",
+            'Daily Doses': question.wordDaily
+            },
+        'question': question.question
+    }})
+
+def liquidTestQuestion(data, i):
+    question = Liquid()
+    data.update({i: {
+        'questType': 'Liquid',
+        'ANS': question.ANS,
+        'box1' : {
+            'Weight': f"{question.bodyweight}kg",
+            'Species': question.species,
+            'Presenting Complaint': question.symptom
+            },
+        'box2' : {
+            'Max Dose Rate': f"{question.dose}mg/kg",
+            'Course Length': f"{question.courseLength} days",
+            'Liquid Strength Available': f"{question.medStrength}mg/tablet",
+            'Daily Doses': question.wordDaily
+            },
+        'question': question.question
+    }})
+    if question.lType == 2:
+        data[i]['box2']['Liquid Strength Available'] = f"{question.percMedStrength}% solution"
+
+def fluidsTestQuestion(data, i):
+    question = Fluids()
+    if question.dehydration > 0:
+        data.update({i: {
+            'questType': 'Fluids',
+            'ANS': question.ANS,
+            'box1': {
+                'Weight': f"{question.bodyweight}kg",
+                'Species': question.species,
+            },
+            'box2': {
+                'Dehydration': f"{question.dehydration}%",
+                'On Going Losses': f"{question.onGoingLoss}ml/day",
+                'Drops Per Ml': f"{question.dropsPerMl} drops",
+            },
+            'question': question.question
+        }})
+    else:
+        data.update({i: {
+            'questType': 'Fluids',
+            'ANS': question.ANS,
+            'box1': {
+                'Weight': f"{question.bodyweight}kg",
+                'Species': question.species,
+            },
+            'box2': {
+                'Drops Per ml': f"{question.dropsPerMl} drops",
+            },
+            'question': question.question
+        }})
+def gasflowTestQuestion(data, i):
+    question = Gasflow()
+    data.update({i: {
+        'questType': 'Gasflow',
+        'box1': {
+            'Species': question.species,
+            'Weight': f"{question.bodyweight}kg",
+            'Respiration Rate': f"{question.respirationRate}breaths/minute",
+            'Tidal Volume': f"{question.tidalVolume}ml"
+        },
+        'box2': {
+            'Circuit': question.circuit,
+            'Minimun Circuit Factor': question.minFactor,
+            'Maximum Circuit Factor': question.maxFactor
+        },
+        'minGasFlow': question.minGasFlow,
+        'maxGasFlow': question.maxGasFlow,
+        'question': question.question
+    }})
+def injectableTestQuestion(data, i):
+    question = Injectable()
+    data.update({i: {
+        'questType': 'Injectable',
+        'box1': {
+            'Species': question.species,
+            'Weight': f"{question.bodyweight}kg",
+        },
+        'box2': {
+            'Liquid Concentration': f"{question.medStrength}mg/ml solution",
+        },
+        'ANS': question.ANS,
+        'question': question.question
+    }})
+    if question.lType == 2:
+        data[i]['box2']['Liquid Concentration'] = f"{question.percMedStrength}% solution"
 
 def testGen(testType):
     data = {}
     if testType == "Tablet":
         for i in range(10):
-            question = Tablet()
-            data.update({i: {
-                'questType': 'Tablet',
-                'ANS': question.ANS,
-                'bodyweight': question.bodyweight,
-                'species': question.species,
-                'symptom': question.symptom,
-                'dose': question.dose,
-                'courseLength': question.courseLength,
-                'medStrength': question.medStrength,
-                'wordDaily': question.wordDaily,
-                'question': question.question
-            }})
+            tabletTestQuestion(data, i)      
     if testType == "Liquid":
         for i in range(10):
-            question = Liquid()
-            data.update({i: {
-                'questType': 'Liquid',
-                'ANS': question.ANS,
-                'bodyweight': question.bodyweight,
-                'species': question.species,
-                'symptom': question.symptom,
-                'dose': question.dose,
-                'lType': question.lType,
-                'courseLength': question.courseLength,
-                'medStrength': question.medStrength,
-                'wordDaily': question.wordDaily,
-                'question': question.question
-            }})
-            if question.lType == 2:
-                data[i]['percMedStrength'] = question.percMedStrength
+            liquidTestQuestion(data, i)    
     if testType == "Fluids":
         for i in range(10):
-            question = Fluids()
-            data.update({i: {
-                'questType': 'Fluids',
-                'ANS': question.ANS,
-                'bodyweight': question.bodyweight,
-                'species': question.species,
-                'dehydration': question.dehydration,
-                'dailyFluids': question.dailyFluids,
-                'onGoingLoss': question.onGoingLoss,
-                'dropsPerMl': question.dropsPerMl,
-                'mlVsSec': question.mlVsSec,
-                'question': question.question
-            }})
-    if testType == "gasFlow":
+            fluidsTestQuestion(data, i)   
+    if testType == "Gasflow":
         for i in range(10):
-            question = Gasflow()
-            data.update({i: {
-                'questType': 'gasFlow',
-                'species': question.species,
-                'bodyweight': question.bodyweight,
-                'respirationRate': question.respirationRate,
-                'tidalVolume': question.tidalVolume,
-                'circuit': question.circuit,
-                'minFactor': question.minFactor,
-                'maxFactor': question.maxFactor,
-                'minGasFlow': question.minGasFlow,
-                'maxGasFlow': question.maxGasFlow,
-                'question': question.question
-            }})
+            gasflowTestQuestion(data,i)
     if testType == "Injectable":
         for i in range(10):
-            question = Injectable()
-            data.update({i: {
-                'questType': 'Injectable',
-                'ANS': question.ANS,
-                'species': question.species,
-                'bodyweight': question.bodyweight,
-                'dose': question.dose,
-                'medStrength': question.medStrength,
-                'question': question.question,
-                'lType': question.lType
-            }})
-            if question.lType == 2:
-                data[i]['percMedStrength'] = question.percMedStrength
+            injectableTestQuestion(data, i)
     if testType == "Hazard":
         for i in range(10):
             qSelector = r.randint(1, 5)
             if qSelector == 1:
-                question = Tablet()
-                data.update({i: {
-                    'questType': 'Tablet',
-                    'ANS': question.ANS,
-                    'bodyweight': question.bodyweight,
-                    'species': question.species,
-                    'symptom': question.symptom,
-                    'dose': question.dose,
-                    'courseLength': question.courseLength,
-                    'medStrength': question.medStrength,
-                    'wordDaily': question.wordDaily,
-                    'question': question.question
-                }})
+                tabletTestQuestion(data, i)
             elif qSelector == 2:
-                question = Liquid()
-                data.update({i: {
-                    'questType': 'Liquid',
-                    'ANS': question.ANS,
-                    'bodyweight': question.bodyweight,
-                    'species': question.species,
-                    'symptom': question.symptom,
-                    'dose': question.dose,
-                    'lType': question.lType,
-                    'courseLength': question.courseLength,
-                    'medStrength': question.medStrength,
-                    'wordDaily': question.wordDaily,
-                    'question': question.question
-                }})
-                if question.lType == 2:
-                    data[i]['percMedStrength'] = question.percMedStrength
+                liquidTestQuestion(data, i)    
             elif qSelector == 3:
-                question = Fluids()
-                data.update({i: {
-                    'questType': 'Fluids',
-                    'ANS': question.ANS,
-                    'bodyweight': question.bodyweight,
-                    'species': question.species,
-                    'dehydration': question.dehydration,
-                    'dailyFluids': question.dailyFluids,
-                    'onGoingLoss': question.onGoingLoss,
-                    'dropsPerMl': question.dropsPerMl,
-                    'mlVsSec': question.mlVsSec,
-                    'question': question.question
-                }})
+                fluidsTestQuestion(data, i)
             elif qSelector == 4:
-                question = Gasflow()
-                data.update({i: {
-                    'questType': 'gasFlow',
-                    'species': question.species,
-                    'bodyweight': question.bodyweight,
-                    'respirationRate': question.respirationRate,
-                    'tidalVolume': question.tidalVolume,
-                    'circuit': question.circuit,
-                    'minFactor': question.minFactor,
-                    'maxFactor': question.maxFactor,
-                    'minGasFlow': question.minGasFlow,
-                    'maxGasFlow': question.maxGasFlow,
-                    'question': question.question
-                }})
+                gasflowTestQuestion(data, i)
             elif qSelector == 5:
-                question = Injectable()
-                data.update({i: {
-                    'questType': 'Injectable',
-                    'species': question.species,
-                    'bodyweight': question.bodyweight,
-                    'dose': question.dose,
-                    'medStrength': question.medStrength,
-                    'ANS': question.ANS,
-                    'question': question.question
-                }})
-                if question.lType == 2:
-                    data[i]['percMedStrength'] = question.percMedStrength
+                injectableTestQuestion(data, i)
     data.update({10: testType})
     return data

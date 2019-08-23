@@ -1,85 +1,114 @@
 {% extends "base.html" %}
 
-{% block title %}
-Anaesthetic Gas Flow Calculations
+{% block head %}
+<script src="../static/javascript/quiz.js"></script>
+<link href="../static/css/theatre.css" rel="stylesheet" type="text/css">
+<link href="../static/css/questions.css" rel="stylesheet" type="text/css">
+<title>Anaesthetic Gas Flow Calculations</title>
 {% endblock %}
 
 {% block main %}
-<link href="../static/css/theatre.css" rel="stylesheet" type="text/css">
-<div id="maxanswer" style="display:none;">{{data.maxGasFlow}}</div>
-<div id="minanswer" style="display:none;">{{data.minGasFlow}}</div>
-<div class="flexcontainer">
-<div class="flexbox2"><img class="pPic"{% if data.species == "Cat"%} src="/static/images/Cat.jpg"{% else %}src="/static/images/Dog.jpg"{% endif %}></div>
-<div class="flexbox2">
-    <h3>Patient Details</h3>
-    <ul class="pDetails">
-    <li>Species: {{data.species}}</li>
-    <li>Weight: {{data.bodyweight}}kg</li>
-    <li>Respiration Rate: {{data.respirationRate}} breaths/minute</li>
-    <li>Tidal Volume: {{data.tidalVolume}} ml/kg</li>
-    <li>Circuit Type: {{data.circuit}}</li>
-    <li>Circuit Factor: {{data.minFactor}}-{{data.maxFactor}}</li>
-    </ul>
-</div>
-</div>
-<div class="question"> {{ data.question.part1}}<br>
-{{data.question.part2}} <input type="number" class="answerbox">{{data.question.part4}} <br>
-{{data.question.part3}} <input type="number" class="answerbox">{{data.question.part4}} <br>
-{{data.question.part5}}
-</div>
-<div class="comment"></div>
-<div style="margin-bottom: 10px;">
-    <input type="button" class="smallbtn hintbtn" onclick="hintreveal()" value="Help Me!">
-    <input type="button" class="smallbtn answerbtn" onclick="answerreveal()" value="Show Answer">
-    <input type="button" class="smallbtn submitbtn" onclick="answercheck(2)" value="Submit Answer">
-    <input type="button" class="smallbtn newbtn" onclick="window.location.href='/gascalc?q=quiz'" value="Next Question">
-</div>
-<div class="hint">
-    The calculation can be performed using the following formulae:
-    <div class="centered">
-        First we find the volume per breath of the patient
-    </div>
-    <div class="centered formula">
-         Breath Volume = Bodyweight X Tidal Volume
-    </div>
-    <div class="centered">
-        Then we find the volume of air required per minute
-    </div>
-    <div class="centered formula">
-        Airflow per Minute = Breath Volume X Respiration Rate
-    </div>
-    <div class="centered">
-        Then we multiply this by the maximum and minimum circuit factors
-    </div>
-    <div class="centered formula">
-        Maximum Gasflow per Minute = Airflow per Minute X Maximum Circuit Factor <br>
-        Minimum Gasflow per Minute = Airflow per Minute X Minimum Circuit Factor
-    </div>
-</div>
-<div class="answer">
-    The calculation for the answer is as follows:
-    <div class="centered">
-        First we find the volume per breath of the patient
-    </div>
-    <div class="centered formula">
-         Breath Volume = {{data.bodyweight}}kg X {{data.tidalVolume}}ml/kg = {{data.breathVolume}}ml
-    </div>
-    <div class="centered">
-        Then we find the volume of air required per minute
-    </div>
-    <div class="centered formula">
-        Airflow per Minute = {{data.breathVolume}}ml X {{data.respirationRate}} breaths/minute = {{data.minuteVolume}}ml/minute
-    </div>
-    <div class="centered">
-        Then we multiply this by the maximum and minimum circuit factors
-    </div>
-    <div class="centered formula">
-        Maximum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.maxFactor}} <br>
-        Minimum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.minFactor}}
-    </div>
-    <div class="centered answerText">
-        Maximum Gas Flow Rate = {{data.maxGasFlow}}ml/minute <br>
-        Minimum Gas Flow Rate = {{data.minGasFlow}}ml/minute
-    </div>
-</div>
+<main>
+    <p id="maxanswer" style="display:none;">{{data.maxGasFlow}}</p>
+    <p id="minanswer" style="display:none;">{{data.minGasFlow}}</p>
+    <article>
+        <h1>Gas Flow Calculations</h1>
+        <section id="picture">
+            <img src="/static/images/{{data.species}}.jpg" alt="{{data.species}} patient">
+        </section>
+        <section id="patientdetail">
+            <h2>Patient Information</h2>
+            <ul>
+                <li>Species: {{data.species}}</li>
+                <li>Weight: {{data.bodyweight}}kg</li>
+                <li>Respiration Rate: {{data.respirationRate}} breaths/minute</li>
+                <li>Tidal Volume: {{data.tidalVolume}} ml/kg</li>
+                <li>Circuit Type: {{data.circuit}}</li>
+                <li>Circuit Factor: {{data.minFactor}}-{{data.maxFactor}}</li>
+            </ul>
+        </section>
+        <section id="question">
+            <h2>Question</h2>
+            <div>
+                <p> 
+                    {{ data.question.intro}}
+                </p>
+                <p>
+                    <label>{{data.question.maxgas}}<input type="number" id="maxguess">{{data.question.units}}</label>
+                </p>
+                <p>
+                    <label>{{data.question.mingas}} <input type="number" id="minguess">{{data.question.units}}</label>
+                </p>
+                <p>
+                    {{data.question.otherinfo}}
+                </p>
+            </div>
+            <button id="hintbtn">Help Me!</button>
+            <button id="answerbtn">Show Answer</button>
+            <button id="submitbtn">Submit Answer</button>
+            <button id="newbtn">Next Question</button>
+            <p id="comment"></p>
+        </section>
+        <section id="hint">
+                <h2>Hint</h2>
+            <p>
+                The calculation can be performed using the following formulae:
+            </p>
+            <p>
+                First we find the volume per breath of the patient
+            </p>
+            <p class="formula">
+                Breath Volume = Bodyweight X Tidal Volume
+            </p>
+            <p>
+                Then we find the volume of air required per minute
+            </p>
+            <p class="formula">
+                Airflow per Minute = Breath Volume X Respiration Rate
+            </p>
+            <p>
+                Then we multiply this by the maximum and minimum circuit factors
+            </p>
+            <p class="formula">
+                Maximum Gasflow per Minute = Airflow per Minute X Maximum Circuit Factor
+            </p>
+            <p class="formula">
+                Minimum Gasflow per Minute = Airflow per Minute X Minimum Circuit Factor
+            </p>
+        </section>
+        <section id="ans">
+            <h2>Answer</h2>
+            <p>
+                The calculation for the answer is as follows:
+            </p>
+            <p>
+                First we find the volume per breath of the patient
+            </p>
+            <p class="formula">
+                Breath Volume = {{data.bodyweight}}kg X {{data.tidalVolume}}ml/kg = {{data.breathVolume}}ml
+            </p>
+            <p>
+                Then we find the volume of air required per minute
+            </p>
+            <p class="formula">
+                Airflow per Minute = {{data.breathVolume}}ml X {{data.respirationRate}} breaths/minute = {{data.minuteVolume}}ml/minute
+            </p>
+            <p>
+                Then we multiply this by the maximum and minimum circuit factors
+            </p>
+            <p class="formula">
+                Maximum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.maxFactor}}
+            </p>
+            <p class="formula">
+                Minimum Gasflow per Minute = {{data.minuteVolume}}ml/minute X {{data.minFactor}}
+            </p>
+            <p class="finalanswer">
+                Maximum Gas Flow Rate = {{data.maxGasFlow}}ml/minute
+            </p>
+            <p class="finalasnwer">
+                Minimum Gas Flow Rate = {{data.minGasFlow}}ml/minute
+            </p>
+        </section>
+    </article>
+</main>
 {% endblock %}
