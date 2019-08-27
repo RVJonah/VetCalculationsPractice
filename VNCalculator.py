@@ -227,13 +227,15 @@ class Liquid(Cat, Dog):
         # volume of liquid required for patient
         self.mgPerDose = round((self.bodyweight * self.dose), 5)
         self.unroundedVolPer = round(self.mgPerDose / self.medStrength, 5)
-        self.liquidPer = math.floor(round(self.unroundedVolPer, 1) * 10) / 10
+        print(self.medStrength)
+        self.liquidPer = round((math.floor(self.unroundedVolPer * 10) / 10), 1)
         self.unroundANS = round((self.liquidPer * self.courseLength * self.interval), 5)
         self.ANS = math.ceil(self.unroundANS)
 
         # if percentage solution modify medstrength to percentage
         if self.lType == 2:
-            self.percMedStrength = self.medStrength * 10
+            self.percMedStrength = self.medStrength / 10
+            print(self.percMedStrength)
 
         self.question = {
             'intro': "A patient is being sent home with medication in liquid form. You have been asked to determine the volume of liquid required to complete the full course of treatment.",

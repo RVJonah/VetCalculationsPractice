@@ -7,26 +7,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="/static/javascript/helper.js"></script>
+        <script src="/static/javascript/nav.js"></script>
         {% block head %}{% endblock %}
         <link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png" />
     </head>
 
     <body>
         <header>
-            <nav>
-                <ul class="navul">
-                    <li><a href="/">Home</a></li>
+            <nav id="nav">
+                <button type="button" id="navBtn">Menu</button>
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
                     <li><a href="/pharmacy">Pharmacy</a>
                         <ul>
                             <li>
-                                Tablets
+                                <span>Tablets</span>
                                 <ul>
                                     <li><a href="/tabletcalc/teach">Teach Me</a></li>
                                     <li><a href="/tabletcalc/quiz">Quiz Me</a></li>
                                 </ul>
                             </li>
                             <li>
-                                Liquids
+                                <span>Liquids</span>
                                 <ul>
                                     <li><a href="/liquidcalc/teach">Teach Me</a></li>
                                     <li><a href="/liquidcalc/quiz">Quiz Me</a></li>
@@ -37,7 +41,8 @@
                     <li>
                         <a href="/kennels">Kennels</a>
                         <ul>
-                            <li>Fluids
+                            <li>
+                                <span>Fluids</span>
                                 <ul>
                                     <li><a href="/fluidcalc/teach">Teach Me</a></li>
                                     <li><a href="/fluidcalc/quiz">Quiz Me</a></li>
@@ -48,13 +53,15 @@
                     <li>
                         <a href="/theatre">Theatre</a>
                         <ul>
-                            <li>Injectables
+                            <li>
+                                <span>Injectables</span>
                                 <ul>
                                     <li><a href="/injectioncalc/teach">Teach Me</a></li>
                                     <li><a href="/injectioncalc/quiz">Quiz Me</a></li>
                                 </ul>
                             </li>
-                            <li>Gas Flow
+                            <li>
+                                <span>Gas Flow</span>
                                 <ul>
                                     <li><a href="/gascalc/teach">Teach Me</a></li>
                                     <li><a href="/gascalc/quiz">Quiz Me</a></li>

@@ -175,6 +175,7 @@ def checkAnswers():
         db.add(newResult)
         db.commit()
         percentage = f"{percentage}%"
+        print("returning template")
         return render_template("result.html", counter=counter, unanswered=unanswered, percentage=percentage, TType=TType)
     else:
         return redirect("/test", 405)

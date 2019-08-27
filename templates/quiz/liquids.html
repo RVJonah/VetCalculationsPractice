@@ -22,7 +22,7 @@
                 <li>Weight: {{data.bodyweight}}kg</li>
                 <li>Presenting Complaint: {{data.symptom}}</li>
                 <li>Max Dose Rate: {{data.dose}}mg/kg</li>
-                <li>Liquid Strength Available: {{data.medStrength}}{% if data.lType == 1 %}mg/ml {% else %}% Solution{%endif%}</li>
+                <li>Liquid Strength Available: {% if data.lType == 1 %}{{data.medStrength}}mg/ml {% else %}{{data.percMedStrength}}% Solution{%endif%}</li>
                 <li>Daily Doses: {% if data.interval == 1 %}Once{% else %}Twice{% endif %} Daily</li>
                 <li>Length Of Treatment: {{data.courseLength}} Days</li>
             </ul>
@@ -80,11 +80,11 @@
                 Mg per Dose = {{data.bodyweight}}kg X {{data.dose}}mg/kg = {{data.mgPerDose}}mg
             {% if data.lType == 2 %}
             <p class="forumla">
-                Concentration = {{data.medStrength}} X 10 = {{data.percMedStrength}}mg/ml
+                Concentration = {{data.percMedStrength}} X 10 = {{data.medStrength}}mg/ml
             </p>
                 {%endif%}
             <p class="formula">
-                Volume per Dose = {{data.mgPerDose}}mg / {% if data.lType == 2 %}{{data.percMedStrength}}{% else %}{{data.medStrength}}{% endif %}mg/ml ={{data.unroundedVolPer}}ml
+                Volume per Dose = {{data.mgPerDose}}mg / {% if data.lType == 1 %}{{data.medStrength}}{% else %}{{data.percMedStrength}}{% endif %}mg/ml ={{data.unroundedVolPer}}ml
             </p>
             <p>
                 This is then rounded to {{data.liquidPer}} ml

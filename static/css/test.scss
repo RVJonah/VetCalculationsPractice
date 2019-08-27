@@ -17,7 +17,7 @@ body {
 #question {
     grid-area: hint;
     padding: 1em;
-    height: 35em;
+    height: 30em;
     button {
         width: 25%;
         position: fixed;
@@ -36,11 +36,8 @@ body {
     }
     p {
         font-size: 1.25em;
-        height: 8em;
+        height: 6em;
         text-align: left;
-    }
-    p:last-of-type {
-        height: 4em;
     }
 }
 .subtitle {
