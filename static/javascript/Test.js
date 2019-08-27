@@ -1,72 +1,71 @@
 'use strict';
 var Test = (function () {
-    var testObj = {
-        qNum: 0,
-        questions: {
-        },
-        answers: {},
-        testArea: null,
-        testList: null,
+    var qNum = 0;
+    var questions = {};
+    var answers = {};
+    var testArea = null;
+    var testList = null;
+    return {
         createTestArea: function () {
-            var testarea = domCreate.element("article", {'id':"testarea"});
-            domCreate.section("testinfo1", "Patient Details", testarea);
-            domCreate.section("testinfo2", "Treatment Details", testarea);
-            var question = domCreate.section("question", "Question", testarea);
+            var testareablock = domCreate.element("article", {'id':"testarea"});
+            domCreate.section("testinfo1", "Patient Details", testareablock);
+            domCreate.section("testinfo2", "Treatment Details", testareablock);
+            var question = domCreate.section("question", "Question", testareablock);
             domCreate.appendCreate("p", {'id': "info"}, question);
             domCreate.appendCreate("p", {'id': "quest"}, question);
             domCreate.appendCreate("p", {'id': "additional"}, question);
             domCreate.button({'id': "prevbtn", 'onclick': "Test.questionSelect(-1)"}, "Previous", question);
             domCreate.button({'id': "nextbtn", 'onclick': "Test.questionSelect(1)"}, "Next", question);
             domCreate.button({'id': "subbtn", 'onclick': "Test.storeAnswer()"}, "Submit", question);
-            domCreate.button({'id': "completebtn", 'onclick': "Test.sendAnswers(Test.answers)"}, "Complete", question);
-            $("Main").append(testarea);
-            this.testArea = testarea;
-        },
+            domCreate.button({'id': "completebtn", 'onclick': "Test.sendAnswers()"}, "Complete", question);
+            $("Main").append(testareablock);
+            testArea = testareablock;
+    },
         deployQuestion: function () {
             $("#testinfo1 ul").remove();
             $("#testinfo2 ul").remove();
             $("#question p").empty()
-            $("h1").html(`Question ${this.qNum + 1}`);
-            domCreate.list({'id': "pdetail"}, this.questions[this.qNum].box1, $("#testinfo1"));
-            domCreate.list({'id': "treatment"}, this.questions[this.qNum].box2, $("#testinfo2"));
-            $("#info").text(this.questions[this.qNum].question.intro);
-            $("#quest").text(this.questions[this.qNum].question.question);
-            $("#additional").text(this.questions[this.qNum].question.otherinfo);
+            $("h1").html(`Question ${qNum + 1}`);
+            domCreate.list({'id': "pdetail"}, questions[qNum].box1, $("#testinfo1"));
+            domCreate.list({'id': "treatment"}, questions[qNum].box2, $("#testinfo2"));
+            $("#info").text(questions[qNum].question.intro);
+            $("#quest").text(questions[qNum].question.question);
+            $("#additional").text(questions[qNum].question.otherinfo);
 
-            if (this.questions[this.qNum].questType === "gasFlow") {
-                var maxUnitDiv = domCreate.answerbox("max", "Max Flow Rate: ", "ANS1", "text", this.questions[this.qNum].question.units);
-                var minUnitDiv = domCreate.answerbox("ANS2", "Min Flow Rate: ", "min", "text", this.questions[this.qNum].question.units);
+            if (questions[qNum].questType === "gasFlow") {
+                var maxUnitDiv = domCreate.answerbox("max", "Max Flow Rate: ", "ANS1", "text", questions[qNum].question.units);
+                var minUnitDiv = domCreate.answerbox("ANS2", "Min Flow Rate: ", "min", "text", questions[qNum].question.units);
                 $("#quest").append(maxUnitDiv);
                 $("#quest").append(minUnitDiv);
             } else {
-                var answerDiv = domCreate.answerbox("max", "Answer: ", "ANS", "text", this.questions[this.qNum].question.units);
+                var answerDiv = domCreate.answerbox("max", "Answer: ", "ANS", "text", questions[qNum].question.units);
                 $("#quest").append(answerDiv);
             }
         },
         displayResults: function (data) {
             $('h1').text("Results");
             $('main').append(data);
-            $('#repeatbtn').attr('onclick', `Test.requestTest('${Test.questions[10]}', 2)`);
+            $('#repeatbtn').attr('onclick', `Test.requestTest('${questions[10]}', 2)`);
             $('#returnbtn').attr('onclick', 'Test.returner()');
         },
         questionSelect: function (move) {
             if (move === 1) {
-                this.qNum++;
+                qNum++;
             }
             if (move === -1) {
-                this.qNum--;
+                qNum--;
             }
-            if (this.qNum === 0) {
+            if (qNum === 0) {
                 $("#prevbtn").prop("disabled", "true");
             }
-            if (this.qNum === 9) {
+            if (qNum === 9) {
                 $("#nextbtn").prop("disabled", "true");
                 $("#completebtn").removeAttr("disabled");
             }
-            if (this.qNum > 0) {
+            if (qNum > 0) {
                 $("#prevbtn").removeAttr("disabled");
             }
-            if (this.qNum < 9) {
+            if (qNum < 9) {
                 $("#nextbtn").removeAttr("disabled");
                 $("#completebtn").prop("disabled", "true");
             }
@@ -81,36 +80,37 @@ var Test = (function () {
                 qtype.TType = event
             }
             if (repeat === 1) {
-                this.testList= $("#testlist").detach();
-                if (this.testArea === null) {
+                testList= $("#testlist").detach();
+                if (testArea === null) {
                     this.createTestArea();
                 } else {
-                    $('main').append(this.testArea);
+                    $('main').append(testArea);
                 }
             }
             if (repeat === 2) {
-                $('main').append(this.testArea);
+                $('main').append(testArea);
                 $('#results').remove();
             }
             $.post("/test", qtype, function(data) {
-                Test.qNum = 0;
-                Test.questions = data;
+                qNum = 0;
+                questions = data;
                 for (var i = 0; i < 10; i++) {
-                    Test.answers[i] = "";
+                    answers[i] = "";
                 } 
-                Test.answers.TType = data[10];
+                answers.TType = data[10];
+                console.log(answers);
                 Test.questionSelect(0);
             });
         },
         returner: function() {
             $('h1').text("Test");
             $('#results').remove();
-            $('main').append(this.testList);
+            $('main').append(testList);
         },
-        sendAnswers: function (answers) {
+        sendAnswers: function () {
             if (confirm ("Are you sure you wish to submit your answers?")) {
                 $.post("/results", answers, function (data) {
-                    Test.qNum = 0;
+                    qNum = 0;
                     Test.displayResults(data);
                     $('h1').text("Results");
                     $('#testarea').detach();
@@ -118,21 +118,20 @@ var Test = (function () {
             }
         },
         storeAnswer : function () {
-            if (this.questions[this.qNum]['questType'] === "gasFlow") {
-                this.answers[this.qNum] = $('#ANS1').val();
-                this.answers[`${this.qNum}min`] = $('#ANS2').val();
+            if (questions[qNum]['questType'] === "gasFlow") {
+                answers[qNum] = $('#ANS1').val();
+                answers[`${qNum}min`] = $('#ANS2').val();
 
             } else {
-                this.answers[this.qNum] = $('#ANS').val();
+                answers[qNum] = $('#ANS').val();
             }
-            if (this.qNum === 9) {
-                this.questionSelect(0);
+            if (qNum === 9) {
+                questionSelect(0);
             } else {
-                this.questionSelect(1);
+                questionSelect(1);
             }
         }
     };
-    return testObj;
 }());
 
 $(document).ready(function () {

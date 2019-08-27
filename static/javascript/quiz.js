@@ -8,8 +8,8 @@ var AnswerCheck = (function () {
             var answer = $("#answer").text();
             if (guess === answer) {
                 Alerts.alert(comment, "Excellent that is the correct answer!");
-                $("#newbtn").show();
-                $("#submitbtn").hide();
+                $("#newbtn").css("visibility", "visible");
+                $(".disable").attr("disabled", "true");
             } else {
                 Alerts.alert(comment, "Sorry that is the wrong answer, please try again or use the help buttons");
             }
@@ -20,7 +20,8 @@ var AnswerCheck = (function () {
             var minAnswer = $("#maxanswer").text();
             if (maxGuess === maxAnswer && minGuess === minAnswer) {
                 Alerts.alert(comment, "Excellent that is the correct answer!");
-                $("#newbtn").show();
+                $("#newbtn").css("visibility", "visible");
+                $(".disable").attr("disabled", "true");
             } else {
                 Alerts.alert(comment, "Sorry that is the wrong answer, please try again or use the help buttons")
             }

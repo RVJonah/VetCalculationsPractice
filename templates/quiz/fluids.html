@@ -2,7 +2,7 @@
 
 {% block head %}
 <script src="../static/javascript/quiz.js"></script>
-<link href="../static/css/kennel.css" rel="stylesheet" type="text/css">
+<link href="../static/css/kennels.css" rel="stylesheet" type="text/css">
 <link href="../static/css/questions.css" rel="stylesheet" type="text/css">
 <title>Fluid Therapy Calculations</title>
 {% endblock %}
@@ -41,9 +41,9 @@
                     {{data.question.otherinfo}}
                 </p>
             </div>
-            <button id="hintbtn">Help Me!</button>
-            <button id="answerbtn">Show Answer</button>
-            <button type="button" id="submitbtn">Submit Answer</button>
+            <button id="hintbtn" class="disable">Help Me!</button>
+            <button id="answerbtn" class="disable">Show Answer</button>
+            <button type="button" id="submitbtn" class="disable">Submit Answer</button>
             <button type="button" id="newbtn">Next Question</button>
             <p id="comment"></p>
         </section>

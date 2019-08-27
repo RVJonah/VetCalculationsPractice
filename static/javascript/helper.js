@@ -10,8 +10,8 @@ var DOM = (function() {
             this.display("#hint");
             this.display("#ans");
             Alerts.alert(comment, "Now you've seen how it's done maybe try another question?");
-            $("#submitbtn").attr("disabled", "true");
             $("#newbtn").css("visibility", "visible");
+            $(".disable").attr("disabled", "true");
         },
         hint: function () {
             this.display("#hint");
